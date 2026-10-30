@@ -76,7 +76,12 @@ test("every site: the registered script brings Bracel on its own, and a site swi
   // switched off here: it goes, and the registration leaves the site out
   await sw.evaluate(() => chrome.storage.local.set({ sites: { "http://localhost": "off" } }));
   await expect.poll(() => shown(page)).toBe(false);
-  await expect.poll(() => sw.evaluate(async () => (await chrome.scripting.getRegisteredContentScripts())[0].excludeMatches.join()), { timeout: 10000 }).toBe("http://localhost/*");
+  // Chrome leaves excludeMatches out when it is empty, and the worker may not have caught up yet: read it gently
+  const excluded = () => sw.evaluate(async () => { const [s] = await chrome.scripting.getRegisteredContentScripts(); return s ? (s.excludeMatches || []).join() : "none"; });
+  await expect.poll(excluded, { timeout: 10000 }).toBe("http://localhost/*");
+  // switched back on: the script is updated in place and the site is no longer left out
+  await sw.evaluate(() => chrome.storage.local.set({ sites: {} }));
+  await expect.poll(excluded, { timeout: 10000 }).toBe("");
 });
 
 test("nothing leaves the browser", async ({ ctx, sw, popup }) => {
