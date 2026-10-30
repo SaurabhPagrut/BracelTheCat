@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bracel</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <img src="../../icons/icon32.png" width="20" height="20" alt="">
+    <h1>Bracel</h1>
+    <span id="where" class="muted"></span>
+  </header>
+
+  <section aria-labelledby="h-here">
+    <h2 id="h-here" class="sr">This tab</h2>
+    <button id="bring" class="primary" type="button">Bring Bracel here</button>
+    <p id="restricted" class="note" hidden>Browsers don't let extensions onto this page. Try a website.</p>
+    <label class="row"><input id="site" type="checkbox"> <span>On this site <span id="siteName" class="muted"></span></span></label>
+    <label class="row"><input id="every" type="checkbox"> <span>On every site</span></label>
+    <p class="note">Your browser asks first. Bracel reads nothing on the page and sends nothing anywhere.</p>
+  </section>
+
+  <section aria-labelledby="h-look">
+    <h2 id="h-look">Look</h2>
+    <fieldset class="coats"><legend class="sr">Coat</legend><div id="coats"></div></fieldset>
+    <label class="row size"><span>Size</span><input id="size" type="range" min="0.14" max="0.45" step="0.01"><output id="sizeOut" for="size"></output></label>
+    <label class="row"><input id="sound" type="checkbox"> <span>Purr sound <span class="muted">(after your first click on the page)</span></span></label>
+  </section>
+
+  <section aria-labelledby="h-acts">
+    <h2 id="h-acts">Activities</h2>
+    <p class="note">Ticked ones it does on its own. ▶ shows one now on this tab.</p>
+    <ul id="acts" class="acts"></ul>
+  </section>
+
+  <footer>
+    <p class="muted">Shortcut: <kbd id="kbd"></kbd> · <a href="#" id="keys">change</a></p>
+    <p class="credit" id="credit"></p>
+  </footer>
+</main>
+<script src="../shared.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
