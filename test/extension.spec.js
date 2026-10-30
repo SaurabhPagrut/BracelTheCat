@@ -71,7 +71,8 @@ test("every site: the registered script brings Bracel on its own, and a site swi
   await sw.evaluate(() => chrome.storage.local.set({ sites: {} }));
   await expect.poll(() => sw.evaluate(async () => (await chrome.scripting.getRegisteredContentScripts()).map(s => s.matches.join()).join()), { timeout: 10000 }).toBe("<all_urls>");
   const page = await ctx.newPage(); await page.goto(U + "dashboard.html");
-  await expect.poll(() => shown(page), { timeout: 15000 }).toBe(true);
+  // it arrives on its own 2.5-9 s after the page loads (src/content.js), more on a busy CI runner
+  await expect.poll(() => shown(page), { timeout: 25000 }).toBe(true);
   // switched off here: it goes, and the registration leaves the site out
   await sw.evaluate(() => chrome.storage.local.set({ sites: { "http://localhost": "off" } }));
   await expect.poll(() => shown(page)).toBe(false);
