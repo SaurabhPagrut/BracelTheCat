@@ -11,7 +11,9 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       five coats, sound, Settings. Copied to `reference/cat.js`.
 - [x] Phases 0-5 built on 30 Oct 2026. Version 1.0.0 is packaged (`npm run build`) and waiting for the owner's
       checks and the store accounts.
-- [ ] **Next:** the owner tries the demos and the unpacked extension, then Phase 6 (accounts, listing, submission).
+- [x] Release prep (30 Oct 2026): popup reshaped (Show switch, settings, folded Actions), website and privacy page
+      (`site/`, `npm run site`), store icon padded to 96+16 px, marquee tile, screenshots with the popup.
+- [ ] **Next:** the owner follows `PUBLISHING.md`: repo public, Cloudflare Pages, Chrome Web Store submission.
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -23,7 +25,7 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       Bracel; the owner still checks each store's search and a trademark database before submitting.
 - [x] **Permission model:** click-to-bring (`activeTab`), "on this site" (one origin at runtime) and optional "on every
       site" (`<all_urls>` at runtime). Recorded in the guidelines §2.
-- [x] **Repo:** github.com/SaurabhPagrut/bracel (private for now; public before the store submission so the source is
+- [x] **Repo:** github.com/SaurabhPagrut/BracelTheCat (renamed from `bracel` on 30 Oct 2026; private for now; public before the store submission so the source is
       readable), MIT licence, README, `CREDITS.md`, this folder's documents, CI with lint + tests.
 - [ ] **Store accounts (owner):** Chrome Web Store developer account (one-time fee), Microsoft Partner Center, Firefox AMO.
 
@@ -86,7 +88,10 @@ Goal: Bracel finds good, safe places to be on real pages.
 
 - [x] Store listing: description (with the Bento Cat credit, guidelines §10), screenshots (1280×800) on saved pages, promo
       tile, icons 16/32/48/128. (`store/LISTING.md`, `store/*.png`, `icons/`.)
-- [ ] Privacy policy page (nothing collected; permissions explained). Written (`PRIVACY.md`); still to publish at a URL.
+- [ ] Privacy policy page (nothing collected; permissions explained). Written (`PRIVACY.md`), built into
+      https://bracel.saurabhpagrut.in/privacy by `npm run site`; live once Cloudflare Pages is set up (`PUBLISHING.md`).
+- [ ] Website https://bracel.saurabhpagrut.in (Cloudflare Pages project `bracel`, bracel.pages.dev): landing page with
+      Bracel on it, privacy page. After approval, point its "Add to Chrome" button at the listing.
 - [ ] Chrome Web Store and Edge Add-ons submission (same package, `dist/bracel-1.0.0.zip`). Version 1.0.0. Needs the
       store accounts (owner).
 - [ ] Link from Bracely's About page once it is live (a small Bracely PR, only after the extension is approved).
@@ -107,7 +112,11 @@ Goal: Bracel finds good, safe places to be on real pages.
 - 30 Oct 2026: permissions are click-to-bring (`activeTab`) plus "on this site" and "on every site" asked at runtime.
 - 30 Oct 2026: where Bracel arrives on its own, it is there "most of the time", like in Bracely (it arrives after a
   few seconds and sometimes leaves and comes back).
-- 30 Oct 2026: repo `SaurabhPagrut/bracel`, private while it is built.
+- 30 Oct 2026: repo `SaurabhPagrut/bracel`, private while it is built; renamed to `SaurabhPagrut/BracelTheCat`.
+- 30 Oct 2026: the toolbar button opens a **popup**, not a side panel. Settings first (Show, sites, coat, size, sound);
+  the 22 actions are folded under "Actions" until opened, so the popup stays under Chrome's 600 px.
+- 30 Oct 2026: the website and privacy policy live at bracel.saurabhpagrut.in on Cloudflare Pages, built from `site/`
+  and `PRIVACY.md` (one source for the policy). No analytics on the site.
 - 30 Oct 2026: no bundler. The content script is four plain files injected in order (`BRACEL.FILES` in `src/shared.js`).
 - 30 Oct 2026: on any website Bracel keeps out of the site's header and menu bars, off buttons and links, and clear of
   fields to type in (focused or not), video players and frames; the bottom of the window is always a home.

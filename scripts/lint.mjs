@@ -23,7 +23,7 @@ for (const f of walk("src").filter(f => f.endsWith(".js"))) {
     if (re.test(src)) fail.push(`${f}: uses ${what}`);
   }
   if (/importScripts\s*\(/.test(src) && !f.endsWith("background.js")) fail.push(`${f}: importScripts outside the service worker`);
-  if (/https?:\/\/(?!rive\.app\/marketplace\/21131-39716-bento-cat\/|creativecommons\.org\/licenses\/by\/4\.0\/|example\.com\b)/.test(src)) fail.push(`${f}: a URL other than the credit's`);
+  if (/https?:\/\/(?!bracel\.saurabhpagrut\.in\/privacy\b|rive\.app\/marketplace\/21131-39716-bento-cat\/|creativecommons\.org\/licenses\/by\/4\.0\/|example\.com\b)/.test(src)) fail.push(`${f}: a URL other than the credit's or the privacy policy's`);
 }
 
 const man = JSON.parse(readFileSync("manifest.json", "utf8")), pkg = JSON.parse(readFileSync("package.json", "utf8"));

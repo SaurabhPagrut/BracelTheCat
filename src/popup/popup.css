@@ -15,6 +15,7 @@ main { padding: 12px 14px; }
 .top #where { margin-left: auto; font-size: 12px; }
 section { border-top: 1px solid var(--line); padding: 10px 0; }
 h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; }
+h3 { font-size: 12px; font-weight: 600; margin: 10px 0 6px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .muted { color: var(--muted); }
 .note { color: var(--muted); font-size: 12px; margin: 4px 0 6px; }
@@ -23,10 +24,15 @@ button, input, a { font: inherit; }
 button { border: 1px solid var(--line); background: var(--soft); color: var(--fg); border-radius: 6px; padding: 5px 10px; cursor: pointer; }
 button:hover { border-color: var(--muted); }
 button:disabled { opacity: .5; cursor: default; }
-.primary { width: 100%; background: var(--accent); color: var(--accent-fg); border-color: var(--accent); font-weight: 600; padding: 7px 10px; margin-bottom: 8px; }
-.primary.away { background: var(--soft); color: var(--fg); border-color: var(--line); }
 .row { display: flex; align-items: center; gap: 8px; padding: 3px 0; cursor: pointer; }
 .row input[type=checkbox] { margin: 0; accent-color: var(--accent); }
+/* Show or hide: a switch, the first thing in the popup */
+.switch { justify-content: space-between; font-weight: 600; padding: 4px 0 8px; }
+.switch input { appearance: none; position: relative; flex: none; width: 34px; height: 20px; margin: 0; border-radius: 999px; background: var(--line); cursor: pointer; transition: background .15s; }
+.switch input::before { content: ""; position: absolute; left: 2px; top: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(15,23,42,.3); transition: transform .15s; }
+.switch input:checked { background: var(--accent); }
+.switch input:checked::before { transform: translateX(14px); }
+.switch input:disabled { opacity: .5; cursor: default; }
 .size input { flex: 1; accent-color: var(--accent); }
 .size output { width: 34px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
 fieldset { border: 0; margin: 0 0 6px; padding: 0; }
@@ -37,6 +43,15 @@ fieldset { border: 0; margin: 0 0 6px; padding: 0; }
 .coat i.tux { background: linear-gradient(90deg, #334155 55%, #f1f5f9 55%) !important; }
 .coat:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .coat:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 1px; }
+/* Actions: folded until opened */
+.fold { border-top: 1px solid var(--line); padding: 2px 0; }
+.fold summary { display: flex; align-items: center; gap: 8px; list-style: none; cursor: pointer; padding: 8px 0; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::before { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: rotate(-45deg); transition: transform .15s; margin: 0 2px; }
+.fold[open] summary::before { transform: rotate(45deg); }
+.fold summary #actsCount { margin-left: auto; text-transform: none; letter-spacing: 0; font-weight: 400; }
+.fold summary:hover { color: var(--fg); }
+.fold[open] { padding-bottom: 10px; }
 .acts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 8px; }
 .acts li { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .acts label { display: flex; align-items: center; gap: 6px; flex: 1; min-width: 0; padding: 2px 0; cursor: pointer; }

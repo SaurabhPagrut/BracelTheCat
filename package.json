@@ -12,7 +12,8 @@
     "build": "node scripts/build.mjs",
     "build:test": "node scripts/build.mjs --test",
     "icons": "node scripts/icons.mjs",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "site": "node scripts/site.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1"

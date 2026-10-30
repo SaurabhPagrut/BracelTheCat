@@ -1,5 +1,6 @@
-// Draws Bracel's head (the engine's head, ears and eyes, Cloud coat) into icons/icon{16,32,48,128}.png and the store
-// promo tile, with Playwright's Chromium. Run after changing the look: npm run icons
+// Draws Bracel's head (the engine's head, ears and eyes, Cloud coat) into icons/icon{16,32,48,128}.png, the store
+// promo tile and the marquee, with Playwright's Chromium. Run after changing the look: npm run icons
+// The 128 icon keeps the Chrome Web Store's 16 px of transparent padding around 96 px of art; the small ones fill.
 import { chromium } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 
@@ -21,7 +22,7 @@ function head(ctx, S, dark) {
     ctx.strokeStyle = c.feat; ctx.lineWidth = 2.4; ctx.lineCap = "round"; ctx.beginPath(); ctx.arc(-3.6, 12.7, 3.6, .05 * Math.PI, .92 * Math.PI); ctx.stroke(); ctx.beginPath(); ctx.arc(3.6, 12.7, 3.6, .08 * Math.PI, .95 * Math.PI); ctx.stroke(); }
   ctx.restore();
 }
-window.icon = S => { const c = document.getElementById("c"); c.width = c.height = S; const x = c.getContext("2d"); x.clearRect(0, 0, S, S); head(x, S); return c.toDataURL("image/png"); };
+window.icon = (S, pad) => { const c = document.getElementById("c"); c.width = c.height = S; const x = c.getContext("2d"); x.clearRect(0, 0, S, S); x.translate(pad, pad); head(x, S - 2 * pad); return c.toDataURL("image/png"); };
 window.tile = (W, H) => { const c = document.getElementById("c"); c.width = W; c.height = H; const x = c.getContext("2d");
   x.fillStyle = "#0f172a"; x.fillRect(0, 0, W, H); x.save(); x.translate(W * 0.04, H * 0.14); head(x, H * 0.72, true); x.restore();
   x.fillStyle = "#f1f5f9"; x.font = "600 " + Math.round(H * 0.16) + "px system-ui, sans-serif"; x.fillText("Bracel", W * 0.5, H * 0.48);
@@ -32,7 +33,8 @@ const browser = await chromium.launch(), p = await browser.newPage();
 await p.setContent(page);
 mkdirSync("icons", { recursive: true }); mkdirSync("store", { recursive: true });
 const save = (f, d) => writeFileSync(f, Buffer.from(d.split(",")[1], "base64"));
-for (const s of [16, 32, 48, 128]) save(`icons/icon${s}.png`, await p.evaluate(s => window.icon(s), s));
+for (const s of [16, 32, 48, 128]) save(`icons/icon${s}.png`, await p.evaluate(([s, pad]) => window.icon(s, pad), [s, s === 128 ? 16 : 0]));
 save("store/promo-440x280.png", await p.evaluate(() => window.tile(440, 280)));
+save("store/marquee-1400x560.png", await p.evaluate(() => window.tile(1400, 560)));
 await browser.close();
-console.log("icons/icon{16,32,48,128}.png, store/promo-440x280.png");
+console.log("icons/icon{16,32,48,128}.png, store/promo-440x280.png, store/marquee-1400x560.png");

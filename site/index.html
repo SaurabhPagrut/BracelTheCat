@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bracel: a cat for every website</title>
+<meta name="description" content="Bracel is a browser extension that puts a little cat on the edges of the websites you visit. It naps, grooms and purrs, and never gets in the way.">
+<meta property="og:title" content="Bracel: a cat for every website">
+<meta property="og:description" content="A little cat that lives on the edges of the websites you visit. Collects nothing, sends nothing.">
+<meta property="og:image" content="https://bracel.saurabhpagrut.in/img/promo.png">
+<link rel="icon" href="/img/icon32.png">
+<link rel="stylesheet" href="/site.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><img src="/img/icon32.png" width="24" height="24" alt="">Bracel</a>
+  <nav><a href="#how">How it works</a><a href="/privacy">Privacy</a><a href="https://github.com/SaurabhPagrut/BracelTheCat">Source</a></nav>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>A cat for every website</h1>
+    <p class="lede">Bracel lives on the edges of the pages you visit. It walks, naps, grooms and purrs, and never gets in the way. It's on this page right now.</p>
+    <div class="cta">
+      <!-- STORE: replace the href with the Chrome Web Store listing URL once the extension is approved -->
+      <a class="btn primary" id="store" href="https://chromewebstore.google.com/search/Bracel">Add to Chrome</a>
+      <span class="small">Free · works in Chrome and Edge · no account</span>
+    </div>
+  </section>
+
+  <section class="card try" aria-labelledby="h-try">
+    <h2 id="h-try">Say hello</h2>
+    <p>Stroke Bracel with your pointer and it purrs. Click it three times and it gets annoyed. Or pick a coat and an action:</p>
+    <div class="row" aria-label="Coat">
+      <button type="button" data-coat="cloud" aria-pressed="true">Cloud</button>
+      <button type="button" data-coat="slate" aria-pressed="false">Slate</button>
+      <button type="button" data-coat="tuxedo" aria-pressed="false">Slate tuxedo</button>
+      <button type="button" data-coat="blue" aria-pressed="false">Accent blue</button>
+      <button type="button" data-coat="amber" aria-pressed="false">Amber</button>
+    </div>
+    <div class="row" aria-label="Actions">
+      <button type="button" data-act="groom">▶ Groom</button>
+      <button type="button" data-act="knead">▶ Knead &amp; purr</button>
+      <button type="button" data-act="play_yarn">▶ Play (yarn)</button>
+      <button type="button" data-act="hop">▶ Jump</button>
+      <button type="button" data-act="hang">▶ Hang</button>
+      <button type="button" data-act="nap">▶ Nap</button>
+    </div>
+  </section>
+
+  <section id="how" class="grid" aria-label="How it works">
+    <div class="card"><h3>Never in the way</h3><p>It takes no clicks, no focus and no keys. It leaves when a dialog opens and keeps clear of what you type in.</p></div>
+    <div class="card"><h3>You choose where</h3><p>Click the toolbar button to bring it to a tab, or switch it on for one site or every site. Your browser asks first.</p></div>
+    <div class="card"><h3>Yours to dress</h3><p>Five coats, any size, purring on or off, and 22 actions you can switch on, off, or play right now.</p></div>
+    <div class="card"><h3>Private by design</h3><p>Bracel collects nothing and sends nothing anywhere. No analytics, no network requests, no account. <a href="/privacy">Privacy policy</a></p></div>
+  </section>
+
+  <figure class="shot"><img src="/img/screenshot-1.png" width="1280" height="800" alt="Bracel sitting on a picture on a news page, with the Bracel popup open" loading="lazy"></figure>
+</main>
+
+<footer><div class="wrap">
+  <p>Bracel's look is adapted from <a href="https://rive.app/marketplace/21131-39716-bento-cat/">Bento Cat</a> by mikewirsch, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Redrawn and animated in code; walking, hanging, jumping, hiding, spots, behaviour and coats are our own.</p>
+  <p><a href="/privacy">Privacy</a> · <a href="https://github.com/SaurabhPagrut/BracelTheCat">Source</a> · <a href="https://github.com/SaurabhPagrut/BracelTheCat/issues">Contact</a> · Code MIT licensed</p>
+</div></footer>
+<script src="/js/shared.js"></script>
+<script src="/js/engine.js"></script>
+<script src="/js/spots.js"></script>
+<script src="/js/cat.js"></script>
+</body>
+</html>

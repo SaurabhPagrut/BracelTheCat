@@ -17,8 +17,11 @@ async function syncNow() {
   const matches = everywhere ? ["<all_urls>"] : own;
   const excludeMatches = Object.keys(sites).filter(s => sites[s] === "off").map(B.patternOf);
   const had = await chrome.scripting.getRegisteredContentScripts({ ids: [ID] }).catch(() => []);
-  if (had.length) await chrome.scripting.unregisterContentScripts({ ids: [ID] }).catch(() => {});
-  if (matches.length) await chrome.scripting.registerContentScripts([{ id: ID, js: AUTO, matches, excludeMatches, runAt: "document_idle", allFrames: false, persistAcrossSessions: true }]);
+  const script = { id: ID, js: AUTO, matches, excludeMatches, runAt: "document_idle", allFrames: false, persistAcrossSessions: true };
+  // changed in place, so a page loading meanwhile never falls in a gap with no script registered
+  if (had.length && matches.length) await chrome.scripting.updateContentScripts([script]);
+  else if (had.length) await chrome.scripting.unregisterContentScripts({ ids: [ID] }).catch(() => {});
+  else if (matches.length) await chrome.scripting.registerContentScripts([script]);
 }
 
 /* ---------- one tab: is Bracel there, bring it, send it away, play one activity ---------- */
