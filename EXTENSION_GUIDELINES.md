@@ -60,6 +60,9 @@ The new part. It must be cheap, cautious and boring.
   whole document in one frame.
 - **Avoid:** text inputs and editors being typed in (keep a margin around the focused element), video players, canvases
   and maps the user is dragging, open dialogs and menus, anything with `aria-modal`.
+- **Keep clear (added 30 Oct 2026):** standing spots stay out of the site's header and menu bars (it may hang under
+  them), off buttons, links and form controls, and clear of every visible field to type in, focused or not. The bottom of
+  the window gives way only to the focused field and open popups, so it stays a home.
 - Re-check the current spot when the page mutates (MutationObserver on `body`, throttled) and leave smoothly if it
   disappears or moves under something.
 

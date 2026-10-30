@@ -7,24 +7,33 @@ gets in the way: it takes no clicks, no focus and no keys.
 This is a **separate project** from Bracely (the JSON tools web app). It starts from Bracely's `cat.js` (copied into
 `reference/cat.js`) but has its own repo, its own releases and its own roadmap. Nothing here is built or shipped by Bracely.
 
-## Files in this folder
+## Files in this repo (github.com/SaurabhPagrut/bracel)
 
 | File | What it is |
 | --- | --- |
 | `CLAUDE.md` | This file: what the project is and how to work on it |
 | `EXTENSION_GUIDELINES.md` | The rules the extension follows: permissions, isolation, performance, privacy, store policy, release checklist |
 | `ROADMAP.md` | The one roadmap: phases, decisions, open questions. Keep it updated as work lands |
-| `reference/cat.js` | Bracel as it ships in Bracely (merged in Bracely #103, 30 Oct 2026). The starting point for the engine |
-| `reference/BRACELY_GLUE.md` | What `cat.js` borrows from Bracely and has to be replaced here |
-
-When the real repo exists, this folder's documents move into it and the code goes under `src/`.
+| `manifest.json` | Manifest V3 |
+| `src/engine.js` | Bracel: poses, drawing, behaviour, sound. Host-independent: `createBracel(host)` (interface at its top) |
+| `src/spots.js` | The spot finder for any website: spots, overlays, light or dark page |
+| `src/content.js` | The content script: closed Shadow DOM host, settings, messages |
+| `src/background.js` | The service worker: badge, shortcut, per-site state, the registered content script |
+| `src/shared.js` | Defaults, the injected file list, activity and coat lists shared by all of the above |
+| `src/popup/` | The toolbar popup (runs on a pretend browser when opened outside the extension) |
+| `demo/` | Demo pages for the owner (`npm run serve`, then http://localhost:8080/demo/) |
+| `test/` | Playwright: engine, spot finder on `test/pages/` (saved pages), the built extension; `live.spec.js` optional |
+| `scripts/` | lint, build, icons, store screenshots, the local server |
+| `store/` | Listing text, screenshots, promo tile |
+| `reference/cat.js` | Bracel as it ships in Bracely (merged in Bracely #103, 30 Oct 2026). `src/engine.js` was generated from it |
+| `reference/BRACELY_GLUE.md` | What `cat.js` borrows from Bracely and how the extension replaces it |
 
 ## Ground rules (from the owner)
 
 - **Separate project.** Don't change Bracely to suit the extension, and don't add extension work to Bracely's roadmap.
   If something should be shared later, copy it and note where it came from.
 - **One roadmap:** `ROADMAP.md`. Planning lives there, not in scattered notes.
-- **Every change ends in a branch, a push and a PR** once the repo exists. Never commit to `main`. Ask before merging
+- **Every change ends in a branch, a push and a PR.** Never commit to `main`. Ask before merging
   anything that isn't CI or Dependabot.
 - **Demo first** for anything visual (a new pose, a new behaviour, a new coat): a standalone HTML page the owner can open
   and try, before it goes into the extension.
@@ -59,5 +68,6 @@ When the real repo exists, this folder's documents move into it and the code goe
 ## Working on it
 
 - Plain JavaScript, no framework, no bundler unless one becomes necessary. Manifest V3.
-- Test against a fixed set of real pages saved locally (see the guidelines) and a few live sites, with Playwright.
+- `npm test` (lint + Playwright) before every PR; `npm run build` makes the store zip. Test against the saved pages in
+  `test/pages/` and, with `npm run test:live`, a few live sites.
 - Check every visual change at 1280 and 390 px, light and dark pages, and at 200% zoom.

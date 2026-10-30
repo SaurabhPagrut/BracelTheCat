@@ -9,7 +9,9 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
 
 - [x] Bracel built and shipped inside Bracely (#103, merged 30 Oct 2026): 22 activities, hanging, jumping, hiding,
       five coats, sound, Settings. Copied to `reference/cat.js`.
-- [ ] **Next: Phase 0** (decisions and setup).
+- [x] Phases 0-5 built on 30 Oct 2026. Version 1.0.0 is packaged (`npm run build`) and waiting for the owner's
+      checks and the store accounts.
+- [ ] **Next:** the owner tries the demos and the unpacked extension, then Phase 6 (accounts, listing, submission).
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -23,61 +25,70 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       site" (`<all_urls>` at runtime). Recorded in the guidelines §2.
 - [x] **Repo:** github.com/SaurabhPagrut/bracel (private for now; public before the store submission so the source is
       readable), MIT licence, README, `CREDITS.md`, this folder's documents, CI with lint + tests.
-- [ ] **Store accounts:** Chrome Web Store developer account (one-time fee), Microsoft Partner Center, Firefox AMO.
+- [ ] **Store accounts (owner):** Chrome Web Store developer account (one-time fee), Microsoft Partner Center, Firefox AMO.
 
 ## Phase 1: split the engine from the host
 
 Goal: the same Bracel runs in a plain test page with no Bracely around it.
 
-- [ ] Split `reference/cat.js` into `engine.js` (poses, drawing, behaviour, sound) and a **host interface**: `storage`,
+- [x] Split `reference/cat.js` into `engine.js` (poses, drawing, behaviour, sound) and a **host interface**: `storage`,
       `surfaces()`, `overlayOpen()`, `theme()`, `onPageChange()`. See `reference/BRACELY_GLUE.md`.
-- [ ] A Bracely-like test host (two panes, a top bar, a menu) that reproduces today's behaviour, so nothing regresses.
-- [ ] Engine unit tests: pose blending, the gait (a planted paw moves backwards at walking speed), activity picking
-      respects the ticks, `interrupt` cancels cleanly, reduced motion draws a single frame.
-- [ ] **Demo page** for the owner: the engine on the test host, with the activity buttons.
+- [x] A Bracely-like test host (two panes, a top bar, a menu) that reproduces today's behaviour, so nothing regresses.
+- [x] Engine unit tests: pose blending, the gait (a planted paw moves backwards at walking speed), activity picking
+      respects the ticks, `interrupt` cancels cleanly, reduced motion draws a single frame. (`test/engine.spec.js`, run in
+      the browser.) The split is generated from `reference/cat.js`, so the drawing code is unchanged; the host interface
+      is `createBracel(host)` (top of `src/engine.js`).
+- [x] **Demo page** for the owner: the engine on the test host, with the activity buttons.
 
 ## Phase 2: spots on any website
 
 Goal: Bracel finds good, safe places to be on real pages.
 
-- [ ] `findSpots()`: ledges (box tops), floors (box bottoms and the viewport's bottom), bars (header bottoms, box
+- [x] `findSpots()`: ledges (box tops), floors (box bottoms and the viewport's bottom), bars (header bottoms, box
       bottoms with room below), walls (sidebar and box edges). Budgeted and cached (guidelines §4).
-- [ ] Overlay detection: `dialog[open]`, `[aria-modal=true]`, large fixed layers with a high z-index, open menus.
-- [ ] Stay clear of the focused input or editor, video players and anything being dragged.
-- [ ] A **saved-pages test set** (static copies, no live network): a news article, a docs site, a web app dashboard,
+- [x] Overlay detection: `dialog[open]`, `[aria-modal=true]`, large fixed layers with a high z-index, open menus.
+- [x] Stay clear of the focused input or editor, video players and anything being dragged.
+- [x] A **saved-pages test set** (static copies, no live network): a news article, a docs site, a web app dashboard,
       a search results page, a shop product page, a social feed, a page with a sticky header and sidebar, a dark site,
-      a very long page, an SPA that swaps its body. The finder's results for each are checked in tests.
-- [ ] **Demo:** Bracel on three of the saved pages, for the owner to try.
+      a very long page, an SPA that swaps its body. The finder's results for each are checked in tests. (`test/pages/`:
+      written by hand as stand-ins for those kinds of page, so nothing copyrighted is checked in; plus a Bracely-like
+      page and a modal dialog page.)
+- [x] **Demo:** Bracel on all the saved pages, for the owner to try (`npm run serve`, then /demo/).
 
 ## Phase 3: the extension shell
 
-- [ ] `manifest.json` (MV3), service worker, content script that injects the closed-Shadow-DOM host (guidelines §3).
-- [ ] Toolbar button: bring Bracel to this tab or send it away; badge shows on/off for the site.
-- [ ] `CREDITS.md` and the credit in the engine's header (guidelines §10).
-- [ ] Settings in `chrome.storage.sync` (coat, size, sound, activities) and per-site state in `chrome.storage.local`.
-- [ ] Keyboard shortcut (`commands`) to show or hide on the current tab.
-- [ ] Survives SPA navigation, body swaps, bfcache restores and tab switches.
+- [x] `manifest.json` (MV3), service worker, content script that injects the closed-Shadow-DOM host (guidelines §3).
+- [x] Toolbar button: bring Bracel to this tab or send it away; badge shows on/off for the site.
+- [x] `CREDITS.md` and the credit in the engine's header (guidelines §10).
+- [x] Settings in `chrome.storage.sync` (coat, size, sound, activities) and per-site state in `chrome.storage.local`.
+- [x] Keyboard shortcut (`commands`) to show or hide on the current tab.
+- [x] Survives SPA navigation, body swaps, bfcache restores and tab switches.
 
 ## Phase 4: the popup
 
-- [ ] This site on/off, everywhere on/off (with the permission request), coat, size, purr sound, activity ticks and ▶.
-- [ ] An About line with the Bento Cat credit and licence link.
-- [ ] Light and dark, keyboard-friendly, labelled. Matches Bracely's minimal look (slate palette, 1px borders, small
+- [x] This site on/off, everywhere on/off (with the permission request), coat, size, purr sound, activity ticks and ▶.
+- [x] An About line with the Bento Cat credit and licence link.
+- [x] Light and dark, keyboard-friendly, labelled. Matches Bracely's minimal look (slate palette, 1px borders, small
       controls).
-- [ ] **Demo** of the popup for the owner before it ships.
+- [x] **Demo** of the popup for the owner before it ships (`/demo/popup.html`, on a pretend browser).
 
 ## Phase 5: quality
 
-- [ ] Performance budget met (guidelines §5) on a busy page, on a laptop and a phone-sized window.
-- [ ] Reduced motion, zoom (100/200%), light and dark pages, 1280 and 390 px.
-- [ ] No network requests in a full session; memory flat over 10 minutes.
-- [ ] Playwright smoke run on a handful of live sites, kept optional in CI.
+- [x] Performance budget met (guidelines §5) on a busy page, on a laptop and a phone-sized window. (A full scan of a
+      4,000-element page is under 80 ms in a test and background slices make no long task; injected scripts ~104 KB.)
+- [x] Reduced motion, zoom (100/200%), light and dark pages, 1280 and 390 px. (Tests at 1280 and 390 on every saved
+      page and with reduced motion; 2× and dark pages checked by screenshot. Pinch zoom: owner, on a phone.)
+- [x] No network requests in a full session (`test/extension.spec.js`).
+- [ ] Memory flat over 10 minutes on a busy page (owner, in DevTools; not automated).
+- [x] Playwright smoke run on a handful of live sites, kept out of CI (`npm run test:live`).
 
 ## Phase 6: publish
 
-- [ ] Store listing: description (with the Bento Cat credit, guidelines §10), screenshots (1280×800) on saved pages, promo tile, icons 16/32/48/128.
-- [ ] Privacy policy page (nothing collected; permissions explained).
-- [ ] Chrome Web Store and Edge Add-ons submission (same package). Version 1.0.0.
+- [x] Store listing: description (with the Bento Cat credit, guidelines §10), screenshots (1280×800) on saved pages, promo
+      tile, icons 16/32/48/128. (`store/LISTING.md`, `store/*.png`, `icons/`.)
+- [ ] Privacy policy page (nothing collected; permissions explained). Written (`PRIVACY.md`); still to publish at a URL.
+- [ ] Chrome Web Store and Edge Add-ons submission (same package, `dist/bracel-1.0.0.zip`). Version 1.0.0. Needs the
+      store accounts (owner).
 - [ ] Link from Bracely's About page once it is live (a small Bracely PR, only after the extension is approved).
 
 ## Later
@@ -97,6 +108,9 @@ Goal: Bracel finds good, safe places to be on real pages.
 - 30 Oct 2026: where Bracel arrives on its own, it is there "most of the time", like in Bracely (it arrives after a
   few seconds and sometimes leaves and comes back).
 - 30 Oct 2026: repo `SaurabhPagrut/bracel`, private while it is built.
+- 30 Oct 2026: no bundler. The content script is four plain files injected in order (`BRACEL.FILES` in `src/shared.js`).
+- 30 Oct 2026: on any website Bracel keeps out of the site's header and menu bars, off buttons and links, and clear of
+  fields to type in (focused or not), video players and frames; the bottom of the window is always a home.
 
 ## Open questions
 
