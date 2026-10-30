@@ -13,7 +13,8 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       checks and the store accounts.
 - [x] Release prep (30 Oct 2026): popup reshaped (Show switch, settings, folded Actions), website and privacy page
       (`site/`, `npm run site`), store icon padded to 96+16 px, marquee tile, screenshots with the popup.
-- [ ] **Next:** the owner follows `PUBLISHING.md`: repo public, Cloudflare Pages, Chrome Web Store submission.
+- [x] 30 Oct 2026: Bracel 1.0.0 submitted to the Chrome Web Store for review.
+- [ ] **Next:** wait for the review. On approval: the listing URL into `site/index.html` (`#store`), then Edge.
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -27,7 +28,9 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       site" (`<all_urls>` at runtime). Recorded in the guidelines §2.
 - [x] **Repo:** github.com/SaurabhPagrut/BracelTheCat (renamed from `bracel` on 30 Oct 2026; private for now; public before the store submission so the source is
       readable), MIT licence, README, `CREDITS.md`, this folder's documents, CI with lint + tests.
-- [ ] **Store accounts (owner):** Chrome Web Store developer account (one-time fee), Microsoft Partner Center, Firefox AMO.
+- [ ] **Store accounts (owner):** Chrome Web Store developer account (one-time fee) done; Microsoft Partner Center,
+      Firefox AMO still to do. The Chrome account is new, so it holds only 2 items for now: Bracel and PinScout
+      (Bracely's listing was unpublished on 30 Oct 2026 to make room).
 
 ## Phase 1: split the engine from the host
 
@@ -92,8 +95,9 @@ Goal: Bracel finds good, safe places to be on real pages.
       https://bracel.saurabhpagrut.in/privacy by `npm run site`; live once Cloudflare Pages is set up (`PUBLISHING.md`).
 - [ ] Website https://bracel.saurabhpagrut.in (Cloudflare Pages project `bracel`, bracel.pages.dev): landing page with
       Bracel on it, privacy page. After approval, point its "Add to Chrome" button at the listing.
-- [ ] Chrome Web Store and Edge Add-ons submission (same package, `dist/bracel-1.0.0.zip`). Version 1.0.0. Needs the
-      store accounts (owner).
+- [x] Chrome Web Store submission: 1.0.0 (`dist/bracel-1.0.0.zip`) submitted for review on 30 Oct 2026.
+- [ ] Chrome Web Store approval; then the listing URL on the website's "Add to Chrome" button.
+- [ ] Edge Add-ons submission (same package). Needs a Microsoft Partner Center account (owner).
 - [ ] Link from Bracely's About page once it is live (a small Bracely PR, only after the extension is approved).
 
 ## Later
