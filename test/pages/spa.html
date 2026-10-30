@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saved page: an app that swaps its body</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font:16px/1.5 Georgia,serif;color:#1f2937;background:#fff} img{max-width:100%;display:block}
+body{font-family:system-ui,sans-serif} .shell{max-width:900px;margin:0 auto;padding:24px} .panel{border:1px solid #e5e7eb;border-radius:10px;padding:20px;min-height:200px;background:#f9fafb;margin:16px 0}
+</style></head>
+<body>
+<div class='shell'><h1>Home view</h1><div class='panel' id='p1'><p>Panel on the home view.</p></div><button id='go'>Go to the next view</button></div>
+<script>
+function view2() { const b = document.createElement('body'); b.innerHTML = "<div class='shell'><h1>Second view</h1><div class='panel' id='p2'><p>A different panel, after the whole body was swapped.</p></div><div class='panel'><p>And another.</p></div></div>"; document.documentElement.replaceChild(b, document.body); history.pushState({}, '', '#two'); }
+document.getElementById('go').addEventListener('click', view2); window.view2 = view2;
+</script>
+</body></html>

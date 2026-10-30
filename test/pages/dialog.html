@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saved page: a modal dialog opens</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font:16px/1.5 Georgia,serif;color:#1f2937;background:#fff} img{max-width:100%;display:block}
+main{max-width:760px;margin:0 auto;padding:24px} .box{border:1px solid #e5e7eb;border-radius:8px;padding:16px;margin:16px 0;background:#f9fafb;min-height:150px} dialog{border:1px solid #e5e7eb;border-radius:12px;padding:24px;width:360px}
+</style></head>
+<body>
+<main><h1>Page with a dialog</h1><div class='box'><button id='open'>Open the dialog</button></div><p>Paragraph 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p><p>Paragraph 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p><p>Paragraph 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p><div class='box'>Another box</div></main><dialog id='dlg'><h2>A modal dialog</h2><p>Bracel should leave while this is open.</p><button id='close'>Close</button></dialog>
+<script>document.getElementById('open').onclick=()=>document.getElementById('dlg').showModal();document.getElementById('close').onclick=()=>document.getElementById('dlg').close();</script>
+</body></html>
