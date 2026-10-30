@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bracel popup demo</title>
+<style>
+:root { color-scheme: light dark; --bg: #f1f5f9; --fg: #0f172a; --muted: #64748b; --line: #cbd5e1; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --fg: #e2e8f0; --muted: #94a3b8; --line: #334155; } }
+body { margin: 0; padding: 24px 16px; background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, sans-serif; }
+h1 { font-size: 16px; margin: 0 0 4px; } p { color: var(--muted); margin: 0 0 16px; max-width: 60ch; }
+iframe { width: 320px; height: 720px; border: 1px solid var(--line); border-radius: 10px; background: transparent; display: block; max-width: 100%; }
+a { color: inherit; }
+</style>
+</head>
+<body>
+<h1>The toolbar popup</h1>
+<p>The real popup, running on a pretend browser: nothing is saved and no permission is asked. In the extension, "On this site" and "On every site" ask the browser first. <a href="./">Back to the demo</a></p>
+<iframe src="../src/popup/popup.html" title="Bracel popup"></iframe>
+</body>
+</html>

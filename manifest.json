@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Bracel: a cat for every website",
+  "short_name": "Bracel",
+  "version": "1.0.0",
+  "description": "A cat that lives on the edges of the websites you visit. It walks, naps and purrs, and never gets in the way.",
+  "minimum_chrome_version": "116",
+  "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "action": {
+    "default_title": "Bracel",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png" }
+  },
+  "background": { "service_worker": "src/background.js" },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "optional_host_permissions": ["<all_urls>"],
+  "commands": {
+    "toggle-bracel": { "suggested_key": { "default": "Alt+Shift+B" }, "description": "Show or hide Bracel on this tab" }
+  },
+  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'self'" }
+}

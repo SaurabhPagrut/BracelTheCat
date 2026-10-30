@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bracel demo</title>
+<style>
+:root { color-scheme: light dark; --bg: #f8fafc; --panel: #fff; --fg: #0f172a; --muted: #64748b; --line: #e2e8f0; --accent: #2563eb; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --panel: #0f172a; --fg: #e2e8f0; --muted: #94a3b8; --line: #1e293b; --accent: #60a5fa; } }
+* { box-sizing: border-box; }
+body { margin: 0; font: 13px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); display: grid; grid-template-columns: 300px 1fr; height: 100vh; }
+aside { background: var(--panel); border-right: 1px solid var(--line); padding: 14px; overflow: auto; }
+h1 { font-size: 16px; margin: 0 0 4px; } h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 14px 0 6px; }
+p { margin: 0 0 8px; color: var(--muted); }
+select, button, input { font: inherit; }
+select { width: 100%; padding: 4px; }
+.row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 4px 0; }
+button { border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+button[aria-pressed=true] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.acts { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.acts button { text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage { display: flex; justify-content: center; align-items: flex-start; overflow: auto; padding: 12px; }
+iframe { border: 1px solid var(--line); background: #fff; width: 100%; height: calc(100vh - 24px); }
+#state { font: 12px ui-monospace, monospace; color: var(--muted); }
+a { color: var(--accent); }
+@media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 70vh; height: auto; } aside { border-right: 0; border-bottom: 1px solid var(--line); } iframe { height: 70vh; } }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Bracel demo</h1>
+  <p>The engine and the spot finder on the saved pages, with no extension. Move the pointer over Bracel to stroke it, click it, wiggle the pointer above its spot.</p>
+  <h2>Page</h2>
+  <select id="page" aria-label="Page"></select>
+  <div class="row"><button data-w="1280">1280 px</button><button data-w="390">390 px</button><button data-w="">Full</button></div>
+  <h2>Bracel</h2>
+  <div class="row"><button id="show">Show</button><button id="hide">Hide</button><button id="outl" aria-pressed="false">Outline spots</button></div>
+  <div id="state">-</div>
+  <h2>Coat and size</h2>
+  <div class="row" id="coats"></div>
+  <div class="row"><input id="size" type="range" min="0.14" max="0.45" step="0.01" value="0.2" aria-label="Size"><span id="sizeOut">0.20</span></div>
+  <h2>Do this now</h2>
+  <div class="acts" id="acts"></div>
+  <h2>More demos</h2>
+  <p><a href="popup.html">The toolbar popup</a> · <a href="../test/pages/">Saved pages</a></p>
+  <p style="margin-top:14px">Bracel's look is adapted from <a href="https://rive.app/marketplace/21131-39716-bento-cat/">Bento Cat</a> by mikewirsch, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Redrawn and animated in code; walking, hanging, jumping, hiding, spots, behaviour and coats are our own.</p>
+</aside>
+<div class="stage"><iframe id="f" title="Saved page with Bracel"></iframe></div>
+<script src="../src/shared.js"></script>
+<script>
+const B = globalThis.BRACEL, $ = id => document.getElementById(id), f = $("f");
+const PAGES = ["bracely", "news", "docs", "dashboard", "search", "shop", "feed", "sticky", "dark", "long", "spa", "dialog"];
+for (const p of PAGES) $("page").append(new Option(p, p));
+const demo = () => f.contentWindow && f.contentWindow.bracelDemo;
+// put the engine into the saved page, the way the extension would
+function inject() {
+  const d = f.contentDocument, files = ["../src/shared.js", "../src/engine.js", "../src/spots.js", "host.js"].map(s => new URL(s, location.href).href);
+  (function next(i) { if (i >= files.length) { apply(); demo().show(); demo().showSpots($("outl").getAttribute("aria-pressed") === "true"); return; }
+    const s = d.createElement("script"); s.src = files[i]; s.onload = () => next(i + 1); d.documentElement.append(s); })(0);
+}
+function apply() { const x = demo(); if (!x) return; x.engine.coat(coat); x.engine.size(+$("size").value); }
+function load() { f.src = "../test/pages/" + $("page").value + ".html"; history.replaceState(null, "", "#" + $("page").value); }
+f.addEventListener("load", inject);
+$("page").addEventListener("change", load);
+document.querySelectorAll("[data-w]").forEach(b => b.addEventListener("click", () => { f.style.width = b.dataset.w ? b.dataset.w + "px" : "100%"; f.style.flex = "none"; }));
+$("show").onclick = () => demo() && demo().show();
+$("hide").onclick = () => demo() && demo().hide();
+$("outl").onclick = e => { const v = e.target.getAttribute("aria-pressed") !== "true"; e.target.setAttribute("aria-pressed", v); demo() && demo().showSpots(v); };
+let coat = "cloud";
+for (const [k, name] of B.COATS) { const b = document.createElement("button"); b.textContent = name; b.setAttribute("aria-pressed", k === coat); b.onclick = () => { coat = k; document.querySelectorAll("#coats button").forEach(x => x.setAttribute("aria-pressed", x === b)); apply(); }; $("coats").append(b); }
+$("size").oninput = () => { $("sizeOut").textContent = (+$("size").value).toFixed(2); apply(); };
+for (const [k, name] of B.ACTS) { const b = document.createElement("button"); b.textContent = "▶ " + name; b.title = name; b.onclick = () => demo() && demo().engine.act(k); $("acts").append(b); }
+setInterval(() => { const x = demo(); $("state").textContent = x ? `${x.engine.shown() ? "shown" : "away"} · ${x.engine.state()} · on ${x.engine.spot() || "-"} · ${x.spots.debug().theme} page` : "-"; }, 250);
+const h = location.hash.slice(1); if (PAGES.includes(h)) $("page").value = h; load();
+</script>
+</body>
+</html>

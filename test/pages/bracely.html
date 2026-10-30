@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Saved page: Bracely-like app (two panes, a top bar, a menu)</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font:13px/1.4 system-ui,sans-serif;color:#0f172a;background:#f8fafc}
+.appbar{height:44px;background:#fff;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;padding:0 14px;gap:10px}
+.app{display:grid;grid-template-columns:220px 1fr;height:calc(100vh - 44px)}
+#rail{border-right:1px solid #e2e8f0;background:#fff;padding:10px;display:flex;flex-direction:column}
+#toolList{flex:1;overflow:auto} .grp{border:1px solid #e2e8f0;border-radius:6px;padding:8px;margin:0 0 70px;background:#f8fafc}
+.foot{border-top:1px solid #e2e8f0;padding:8px 0 0}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:80px 12px 12px}
+.pane{border:1px solid #e2e8f0;border-radius:6px;background:#fff;display:flex;flex-direction:column;min-height:0}
+.pane textarea{flex:1;border:0;resize:none;padding:10px;font:12px ui-monospace,monospace;background:transparent}
+.status{border-top:1px solid #e2e8f0;padding:6px 10px;color:#64748b;background:#f8fafc}
+@media(max-width:700px){.app{grid-template-columns:1fr} #rail{display:none} .panes{grid-template-columns:1fr}}
+</style></head>
+<body>
+<header class="appbar" role="banner"><strong>Bracely</strong><span style="color:#64748b">JSON tools</span></header>
+<div class="app">
+  <nav id="rail" aria-label="Tools"><div id="toolList"><div class="grp">Format<br>Validate<br>Minify</div><div class="grp">Convert<br>Diff<br>Query</div></div><div class="foot">Settings</div></nav>
+  <main class="panes">
+    <section class="pane"><textarea aria-label="Input">{"cat": "Bracel", "likes": ["naps", "boxes"]}</textarea><div class="status">Valid JSON · 2 keys</div></section>
+    <section class="pane"><textarea aria-label="Output" readonly>{
+  "cat": "Bracel"
+}</textarea><div class="status">Output · formatted</div></section>
+  </main>
+</div>
+</body></html>

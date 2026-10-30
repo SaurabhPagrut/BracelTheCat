@@ -12,7 +12,7 @@ and purrs, and never gets in the way: it takes no clicks, no focus and no keys.
 ## Try it
 
 1. `chrome://extensions` → turn on **Developer mode** → **Load unpacked** → pick this folder.
-2. Open any website, click the Bracel button in the toolbar, then **Bring Bracel here**.
+2. Open any website, click the Bracel button in the toolbar, then switch on **Show Bracel on this tab**.
 3. Shortcut: `Alt+Shift+B` shows or hides Bracel on the current tab.
 
 The demo pages in `demo/` run the engine without the extension: `npm run serve` and open http://localhost:8080/demo/.
@@ -34,7 +34,11 @@ npm install          # Playwright, for the tests only
 npm run lint         # syntax and policy checks (no eval, no network, no remote code)
 npm test             # all tests
 npm run build        # dist/bracel-<version>.zip for the stores
+npm run site         # dist/site/, the website (bracel.saurabhpagrut.in) with the privacy policy
 ```
+
+Releasing (website, Chrome Web Store, updates): `PUBLISHING.md`. Privacy policy: `PRIVACY.md`, published at
+https://bracel.saurabhpagrut.in/privacy.
 
 Rules: `EXTENSION_GUIDELINES.md`. Plan: `ROADMAP.md`. How to work on it: `CLAUDE.md`.
 
