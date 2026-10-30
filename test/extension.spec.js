@@ -18,11 +18,19 @@ const tabIdOf = (sw, url) => sw.evaluate(async u => (await chrome.tabs.query({ u
 const send = (popup, msg) => popup.evaluate(m => chrome.runtime.sendMessage(m), msg);
 const shown = page => page.evaluate(() => { const h = document.querySelector("bracel-cat"); return !!h && h.dataset.shown === "1"; });
 
-test("the popup opens cleanly and lists coats, activities and the credit", async ({ ctx, sw }) => {
+test("the popup opens cleanly: show switch, coats, size, sound, folded actions and the credit", async ({ ctx, sw }) => {
   const id = new URL(sw.url()).host, p = await ctx.newPage(), errors = []; p.on("pageerror", e => errors.push(e.message));
   await p.goto(`chrome-extension://${id}/src/popup/popup.html`);
   await expect(p.locator("#acts li")).toHaveCount(22);
   await expect(p.locator("#coats input")).toHaveCount(5);
+  await expect(p.locator("#show")).toHaveAttribute("role", "switch");
+  for (const s of ["#size", "#sound"]) await expect(p.locator(s)).toBeVisible();
+  // Actions start folded and open on a click
+  await expect(p.locator("#actions")).not.toHaveAttribute("open");
+  await expect(p.locator("#acts")).toBeHidden();
+  await expect(p.locator("#actsCount")).toHaveText("22 of 22 on");
+  await p.locator("#actions summary").click();
+  await expect(p.locator("#acts")).toBeVisible();
   await expect(p.locator("#credit")).toContainText("Bento Cat");
   await expect(p.locator("#credit a")).toHaveCount(2);
   expect(errors).toEqual([]);

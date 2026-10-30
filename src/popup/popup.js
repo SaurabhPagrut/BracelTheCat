@@ -1,7 +1,7 @@
-/* The toolbar popup: bring Bracel to this tab or send it away, switch it on for this site or every site (the browser
-   asks for the permission right then), and pick its coat, size, sound and activities. Settings go to
-   chrome.storage.sync; per-site choices to chrome.storage.local. Opened outside the extension (the demo page), it
-   runs on a pretend browser so it can be tried. */
+/* The toolbar popup: show or hide Bracel on this tab, switch it on for this site or every site (the browser asks for
+   the permission right then), and pick its coat, size and sound; the activities sit in a folded "Actions" list.
+   Settings go to chrome.storage.sync; per-site choices to chrome.storage.local. Opened outside the extension (the demo
+   page), it runs on a pretend browser so it can be tried. */
 (async () => {
   const B = globalThis.BRACEL, $ = id => document.getElementById(id);
   const api = globalThis.chrome && chrome.runtime && chrome.runtime.id ? chrome : pretend();
@@ -11,18 +11,17 @@
   const S = await api.storage.sync.get(B.DEF);
   const local = await api.storage.local.get({ everywhere: false, sites: {} });
 
-  /* ---------- this tab ---------- */
+  /* ---------- this tab: show or hide ---------- */
   let st = site ? await ask({ type: "status" }) : null;
-  const bring = $("bring");
+  const show = $("show");
   function paintTab() {
-    $("restricted").hidden = !!site; bring.disabled = !site;
+    $("restricted").hidden = !!site; show.disabled = !site;
     const here = !!(st && st.on);
-    bring.textContent = here ? "Send Bracel away" : "Bring Bracel here"; bring.classList.toggle("away", here);
-    $("where").textContent = here ? "here now" : "";
+    show.checked = here; $("where").textContent = here ? "here now" : "";
   }
-  bring.addEventListener("click", async () => {
-    bring.disabled = true; const r = await ask({ type: st && st.on ? "away" : "bring" });
-    if (r && r.error) { $("restricted").hidden = false; } else st = r; bring.disabled = !site; paintTab();
+  show.addEventListener("change", async () => {
+    show.disabled = true; const r = await ask({ type: show.checked ? "bring" : "away" });
+    if (r && r.error) { $("restricted").hidden = false; } else st = r; paintTab();
   });
 
   /* ---------- this site and every site ---------- */
@@ -71,16 +70,17 @@
   size.addEventListener("change", () => save("size", +size.value));
   $("sound").checked = !!S.sound; $("sound").addEventListener("change", e => save("sound", e.target.checked));
 
-  /* ---------- activities ---------- */
-  const off = new Set(S.acts), list = $("acts");
+  /* ---------- actions (folded until opened) ---------- */
+  const off = new Set(S.acts), list = $("acts"), count = () => { $("actsCount").textContent = B.ACTS.length - off.size + " of " + B.ACTS.length + " on"; };
   for (const [k, name] of B.ACTS) {
     const li = document.createElement("li"), l = document.createElement("label"), c = document.createElement("input"), t = document.createElement("span");
     c.type = "checkbox"; c.checked = !off.has(k); t.textContent = name; t.title = name;
-    c.addEventListener("change", () => { if (c.checked) off.delete(k); else off.add(k); save("acts", [...off]); });
+    c.addEventListener("change", () => { if (c.checked) off.delete(k); else off.add(k); save("acts", [...off]); count(); });
     const play = document.createElement("button"); play.type = "button"; play.textContent = "▶"; play.setAttribute("aria-label", "Show " + name + " now"); play.disabled = !site;
     play.addEventListener("click", async () => { const r = await ask({ type: "act", name: k }); if (r && !r.error) { st = r; paintTab(); } else $("restricted").hidden = false; });
     l.append(c, t); li.append(l, play); list.append(li);
   }
+  count();
 
   /* ---------- shortcut and credit ---------- */
   const cmds = api.commands ? await api.commands.getAll().catch(() => []) : [];

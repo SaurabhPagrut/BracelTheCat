@@ -7,23 +7,26 @@ gets in the way: it takes no clicks, no focus and no keys.
 This is a **separate project** from Bracely (the JSON tools web app). It starts from Bracely's `cat.js` (copied into
 `reference/cat.js`) but has its own repo, its own releases and its own roadmap. Nothing here is built or shipped by Bracely.
 
-## Files in this repo (github.com/SaurabhPagrut/bracel)
+## Files in this repo (github.com/SaurabhPagrut/BracelTheCat)
 
 | File | What it is |
 | --- | --- |
 | `CLAUDE.md` | This file: what the project is and how to work on it |
 | `EXTENSION_GUIDELINES.md` | The rules the extension follows: permissions, isolation, performance, privacy, store policy, release checklist |
 | `ROADMAP.md` | The one roadmap: phases, decisions, open questions. Keep it updated as work lands |
+| `PUBLISHING.md` | How to release: the website on Cloudflare Pages, the Chrome Web Store submission, updates |
+| `PRIVACY.md` | The privacy policy; `npm run site` turns it into https://bracel.saurabhpagrut.in/privacy |
 | `manifest.json` | Manifest V3 |
 | `src/engine.js` | Bracel: poses, drawing, behaviour, sound. Host-independent: `createBracel(host)` (interface at its top) |
 | `src/spots.js` | The spot finder for any website: spots, overlays, light or dark page |
 | `src/content.js` | The content script: closed Shadow DOM host, settings, messages |
 | `src/background.js` | The service worker: badge, shortcut, per-site state, the registered content script |
 | `src/shared.js` | Defaults, the injected file list, activity and coat lists shared by all of the above |
-| `src/popup/` | The toolbar popup (runs on a pretend browser when opened outside the extension) |
+| `src/popup/` | The toolbar popup, not a side panel (runs on a pretend browser when opened outside the extension) |
+| `site/` | The website (bracel.saurabhpagrut.in, Cloudflare Pages): landing page with Bracel on it; `npm run site` → `dist/site/` |
 | `demo/` | Demo pages for the owner (`npm run serve`, then http://localhost:8080/demo/) |
 | `test/` | Playwright: engine, spot finder on `test/pages/` (saved pages), the built extension; `live.spec.js` optional |
-| `scripts/` | lint, build, icons, store screenshots, the local server |
+| `scripts/` | lint, build, website, icons, store screenshots, the local server |
 | `store/` | Listing text, screenshots, promo tile |
 | `reference/cat.js` | Bracel as it ships in Bracely (merged in Bracely #103, 30 Oct 2026). `src/engine.js` was generated from it |
 | `reference/BRACELY_GLUE.md` | What `cat.js` borrows from Bracely and how the extension replaces it |
@@ -61,9 +64,10 @@ This is a **separate project** from Bracely (the JSON tools web app). It starts 
 - **Activities (22):** stand, sit, look around, sniff, groom, scratch ear, paw at screen, scratch wall, knead & purr,
   play (moth), play (yarn), yawn, stretch, nap, walk, jump to another spot, hang, hide behind an edge, leave & return,
   petted, annoyed, hunt & pounce. Internal moves: drop, room (step aside on a click), wake, flee.
-- **Settings:** on/off, coat (Slate, Slate tuxedo, Accent blue, Amber, Cloud, each with a dark-page variant; **Cloud**
-  is the default), size (0.14–0.45, **0.20** default), purr sound (**on** by default; browsers play nothing until the
-  first click or tap), and a tick plus ▶ for each activity.
+- **Settings (the popup):** a Show switch for this tab, on this site, on every site, coat (Slate, Slate tuxedo, Accent
+  blue, Amber, Cloud, each with a dark-page variant; **Cloud** is the default), size (0.14–0.45, **0.20** default), purr
+  sound (**on** by default; browsers play nothing until the first click or tap), and, folded under "Actions" until
+  opened, a tick plus ▶ for each activity.
 
 ## Working on it
 

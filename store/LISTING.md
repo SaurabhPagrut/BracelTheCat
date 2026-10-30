@@ -1,7 +1,16 @@
 # Store listing (Chrome Web Store and Edge Add-ons)
 
-The same text for both stores. Screenshots: `store/screenshot-1..5.png` (1280×800, regenerate with
-`node scripts/screenshots.mjs`). Promo tile: `store/promo-440x280.png`. Icons: `icons/`.
+The same text for both stores. How to submit: `PUBLISHING.md`.
+
+| Asset | File | Where it goes |
+| --- | --- | --- |
+| Store icon 128×128 (96 px art, 16 px transparent padding) | `icons/icon128.png` | Store listing → Store icon |
+| Screenshots 1280×800 | `store/screenshot-1..5.png` (`node scripts/screenshots.mjs`) | Store listing → Screenshots, in order |
+| Small promo tile 440×280 | `store/promo-440x280.png` (`npm run icons`) | Store listing → Small promo tile |
+| Marquee 1400×560 (optional) | `store/marquee-1400x560.png` (`npm run icons`) | Store listing → Marquee promo tile |
+
+Screenshots, in order: 1 news page with the popup (Actions folded), 2 dashboard with Actions open, 3 hanging under a
+web app's top bar, 4 kneading on a dark site, 5 napping on a docs page.
 
 ## Name
 
@@ -13,7 +22,7 @@ A little cat that lives on the edges of the websites you visit. It naps, grooms 
 
 ## Category
 
-Fun (Chrome) · Entertainment (Edge)
+Lifestyle → Just for Fun (Chrome) · Entertainment (Edge)
 
 ## Single purpose (for the review form)
 
@@ -39,7 +48,7 @@ You decide where it goes:
 • Switch on "On every site" to have it visit everywhere, and switch it off on sites where you'd rather not see it.
 
 Pick its coat (Cloud, Slate, Slate tuxedo, Accent blue, Amber), its size, whether it purrs out loud, and which
-activities it does on its own. Each activity has a ▶ button to see it now.
+actions it does on its own (in the folded Actions list). Each action has a ▶ button to see it now.
 
 Private by design: Bracel collects nothing and sends nothing anywhere. No analytics, no network requests at all.
 Your settings stay in your browser.
@@ -60,5 +69,6 @@ spots, behaviour and coats are our own.
 
 ## Privacy
 
-- Privacy policy URL: publish `PRIVACY.md` (for example as a GitHub Pages page once the repo is public) and paste its URL.
+- Privacy policy URL: https://bracel.saurabhpagrut.in/privacy (built from `PRIVACY.md` by `npm run site`).
+- Homepage URL: https://bracel.saurabhpagrut.in · Support URL: https://github.com/SaurabhPagrut/BracelTheCat/issues
 - Data use disclosures: collects no user data; certify all three statements.
