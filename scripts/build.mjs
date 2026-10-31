@@ -33,11 +33,13 @@ if (test) {
 }
 
 // Firefox: a background script instead of a service worker (shared.js first, as importScripts does in Chrome), an add-on
-// id, and the built-in data consent saying nothing is collected (required for new add-ons since November 2025)
+// id, and the built-in data consent saying nothing is collected (required for new add-ons since November 2025; Firefox
+// for Android has it from 142, so its minimum is set too, or AMO warns)
 function firefox(m) {
   const { minimum_chrome_version, ...man } = m;
   man.background = { scripts: ["src/shared.js", "src/background.js"] };
-  man.browser_specific_settings = { gecko: { id: "bracel@saurabhpagrut.in", strict_min_version: "140.0", data_collection_permissions: { required: ["none"] } } };
+  man.browser_specific_settings = { gecko: { id: "bracel@saurabhpagrut.in", strict_min_version: "140.0", data_collection_permissions: { required: ["none"] } },
+    gecko_android: { strict_min_version: "142.0" } };
   return man;
 }
 // Safari: the same package, turned into an Xcode project by Apple's converter on a Mac (see dist/README.md)

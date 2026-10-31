@@ -101,7 +101,7 @@ Entertainment.
 
 The Firefox package differs from Chrome's only in its manifest (made by `npm run build`): a background script instead
 of a service worker, the add-on id `bracel@saurabhpagrut.in` (never change it: it is how updates find the add-on), and
-the built-in data consent declaring that nothing is collected. It needs Firefox 140 or later.
+the built-in data consent declaring that nothing is collected. It needs Firefox 140 or later (Firefox for Android 142, if it is ever offered there).
 
 1. Check it: `npx web-ext lint -s dist/firefox/bracel-firefox-<version>` (0 errors, 0 warnings for 1.0.1), then try it in
    Firefox: `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → its `manifest.json`. Bring Bracel to
