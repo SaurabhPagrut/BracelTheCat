@@ -1,18 +1,19 @@
 // Store screenshots (1280x800) of Bracel on the saved pages: store/screenshot-<n>.png. The first two also show the
-// toolbar popup (on its pretend browser) where Chrome opens it, folded and then with Actions open. Needs the local
-// server (npm run serve). Run after a visible change: node scripts/screenshots.mjs
+// toolbar popup (on its pretend browser) where Chrome opens it, folded and then with Actions open. Each has a caption bar
+// along the bottom (store/LISTING.md). Needs the local server (npm run serve). Run after a visible change:
+// node scripts/screenshots.mjs
 import { chromium } from "@playwright/test";
 
 const SHOTS = [
-  ["news", "figure", "ledge", 0.62, "sit", "folded"],
-  ["dashboard", "table", "ledge", 0.3, "groom", "open"],
-  ["bracely", ".appbar", "bar", 0.55, "hang"],
-  ["dark", ".card", "ledge", 0.4, "knead"],
-  ["docs", "pre", "ledge", 0.7, "nap"]
+  ["news", "figure", "ledge", 0.62, "sit", "Your virtual cat: it sits, walks and naps on the boxes and pictures of any website", "folded"],
+  ["dashboard", "table", "ledge", 0.3, "groom", "22 things to do: pick the ones it does on its own, or press ▶ to see one now", "open"],
+  ["bracely", ".appbar", "bar", 0.55, "hang", "Never in the way: it takes no clicks, no focus and no keys"],
+  ["dark", ".card", "ledge", 0.4, "knead", "Five coats, any size, on light and dark pages. Stroke it and it purrs"],
+  ["docs", "pre", "ledge", 0.7, "nap", "Private: nothing collected, nothing sent, no network requests"]
 ];
 const b = await chromium.launch(), ctx = await b.newContext({ viewport: { width: 1280, height: 800 } });
 let n = 0;
-for (const [name, sel, kind, at, state, popup] of SHOTS) {
+for (const [name, sel, kind, at, state, caption, popup] of SHOTS) {
   const p = await ctx.newPage(); await p.goto(`http://localhost:8080/test/pages/${name}.html`);
   for (const s of ["src/shared.js", "src/engine.js", "src/spots.js", "demo/host.js"]) await p.addScriptTag({ url: "/" + s });
   await p.evaluate(([sel, kind, at, state]) => {
@@ -34,6 +35,10 @@ for (const [name, sel, kind, at, state, popup] of SHOTS) {
     await p.evaluate(h => { document.getElementById("popup").style.height = Math.min(h, 600) + "px"; }, h);
     await pf.evaluate(open => { if (open) document.querySelector("#actions").scrollIntoView(); else scrollTo(0, 0); }, popup === "open");
   }
+  await p.evaluate(caption => { const c = document.createElement("div"); c.textContent = caption;
+    Object.assign(c.style, { position: "fixed", left: 0, right: 0, bottom: 0, height: "72px", display: "flex", alignItems: "center", justifyContent: "center",
+      background: "#2563eb", color: "#ffffff", font: "600 24px system-ui, -apple-system, sans-serif", zIndex: 2147483647 });
+    document.body.append(c); }, caption);
   await p.waitForTimeout(1500);
   await p.screenshot({ path: `store/screenshot-${++n}.png` }); await p.close();
 }

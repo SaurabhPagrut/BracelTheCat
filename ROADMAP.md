@@ -14,7 +14,11 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
 - [x] Release prep (30 Oct 2026): popup reshaped (Show switch, settings, folded Actions), website and privacy page
       (`site/`, `npm run site`), store icon padded to 96+16 px, marquee tile, screenshots with the popup.
 - [x] 30 Oct 2026: Bracel 1.0.0 submitted to the Chrome Web Store for review.
-- [ ] **Next:** wait for the review. On approval: the listing URL into `site/index.html` (`#store`), then Edge.
+- [x] 31 Oct 2026: 1.0.0 approved and live in the Chrome Web Store
+      (https://chromewebstore.google.com/detail/bracel-a-cat-for-every-we/diiopbiepmlejbbibggfhhdmnaeiehjf).
+- [x] 31 Oct 2026 (1.0.1): store search words (name, summary, description, captioned screenshots), and a build for
+      every store (`dist/chrome`, `edge`, `opera`, `firefox`, `safari`). See Phase 7.
+- [ ] **Next:** upload 1.0.1 to Chrome; submit to Edge and Firefox (Phase 7).
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -96,13 +100,36 @@ Goal: Bracel finds good, safe places to be on real pages.
 - [ ] Website https://bracel.saurabhpagrut.in (Cloudflare Pages project `bracel`, bracel.pages.dev): landing page with
       Bracel on it, privacy page. After approval, point its "Add to Chrome" button at the listing.
 - [x] Chrome Web Store submission: 1.0.0 (`dist/bracel-1.0.0.zip`) submitted for review on 30 Oct 2026.
-- [ ] Chrome Web Store approval; then the listing URL on the website's "Add to Chrome" button.
-- [ ] Edge Add-ons submission (same package). Needs a Microsoft Partner Center account (owner).
+- [x] Chrome Web Store approval (31 Oct 2026); the listing URL is on the website's "Add to Chrome" button (1.0.1).
+- [ ] Edge Add-ons submission (`dist/edge/`). Needs a Microsoft Partner Center account (owner).
 - [ ] Link from Bracely's About page once it is live (a small Bracely PR, only after the extension is approved).
+
+## Phase 7: more stores, and being found (31 Oct 2026)
+
+From the owner's SEO guide (kept out of the repo, in `var/`) and a look at which browsers take extensions.
+
+- [x] Store text aimed at what people search for (virtual pet, browser pet, virtual cat, screen pet, desktop pet,
+      study companion): name "Bracel – Virtual Cat & Screen Pet", new summary and description (`store/LISTING.md`,
+      `manifest.json`). No keyword lists and no other products' trademarks.
+- [x] Captions on the five store screenshots (`scripts/screenshots.mjs`).
+- [x] Website title and description use the same words; "Add to Chrome" points at the listing.
+- [x] One build per browser: `npm run build` → `dist/<browser>/` and `dist/README.md`.
+- [x] Firefox package: background script, add-on id `bracel@saurabhpagrut.in`, no data collected declared, Firefox
+      140+. `web-ext lint`: 0 errors, 0 warnings.
+- [ ] Upload 1.0.1 to the Chrome Web Store (new name, summary, description and screenshots) (owner).
+- [ ] Try the Firefox package in Firefox, then submit it to AMO (owner; free Firefox account). `PUBLISHING.md` §5.
+- [ ] Edge (above) and Opera add-ons (`PUBLISHING.md` §6) (owner).
+- [ ] First honest reviews: share the listing with friends and colleagues; ask for real feedback (owner). No paid
+      or swapped reviews (store policy).
+- [ ] Share it: a short clip of Bracel on a page for Reddit (r/chrome_extensions, r/webdev with how it was made, cat
+      subreddits where self-promotion is allowed), short-video sites, and Product Hunt (owner).
+- [ ] Safari: needs Xcode and the Apple Developer Program (US$99 a year); `dist/safari/` is ready for Apple's converter.
+- [ ] Firefox for Android and Samsung Internet: only after trying Bracel on a phone (touch has no hover or pounce).
+
+Not separate stores: Brave, Vivaldi, Arc, Yandex and Naver Whale install from the Chrome Web Store.
 
 ## Later
 
-- [ ] Firefox (browser.* shim, gecko id), then Safari (Xcode converter).
 - [ ] "Follow me": when the pointer moves far away, Bracel travels along edges towards it and sits nearby (opt-in).
 - [ ] More coats; a coat that follows the site's own colours.
 - [ ] Shared engine: if Bracel changes in one place, decide whether Bracely and the extension share `engine.js`
@@ -124,6 +151,10 @@ Goal: Bracel finds good, safe places to be on real pages.
 - 30 Oct 2026: no bundler. The content script is four plain files injected in order (`BRACEL.FILES` in `src/shared.js`).
 - 30 Oct 2026: on any website Bracel keeps out of the site's header and menu bars, off buttons and links, and clear of
   fields to type in (focused or not), video players and frames; the bottom of the window is always a home.
+- 31 Oct 2026: the store name becomes "Bracel – Virtual Cat & Screen Pet" (people search for "virtual pet", not "a cat
+  for every website"); the website's headline stays "A cat for every website".
+- 31 Oct 2026: one source tree, one package per browser made by the build; no `browser.*` polyfill library, just one line
+  in `shared.js`.
 
 ## Open questions
 

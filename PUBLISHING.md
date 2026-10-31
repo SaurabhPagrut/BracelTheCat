@@ -1,6 +1,7 @@
 # Publishing Bracel
 
-How to put the website live and the extension in the Chrome Web Store, and how to ship an update. The listing text
+How to put the website live and the extension in the Chrome Web Store, Edge, Firefox, Opera and Safari, and how to ship
+an update. The listing text
 and the assets are in `store/LISTING.md`; the plan is in `ROADMAP.md`.
 
 ## 1. Before anything
@@ -12,10 +13,10 @@ and the assets are in `store/LISTING.md`; the plan is in `ROADMAP.md`.
    ```sh
    npm ci && npx playwright install chromium
    npm test            # lint + all Playwright tests
-   npm run build       # dist/bracel-1.0.0/ and dist/bracel-1.0.0.zip
+   npm run build       # dist/<browser>/bracel-<browser>-<version>/ and .zip, plus dist/README.md (which goes where)
    npm run site        # dist/site/, the website
    ```
-4. `chrome://extensions` → Developer mode → **Load unpacked** → `dist/bracel-1.0.0/`. On a website: click the
+4. `chrome://extensions` → Developer mode → **Load unpacked** → `dist/chrome/bracel-chrome-<version>/`. On a website: click the
    toolbar icon (it opens the popup), switch on **Show Bracel on this tab**, change coat, size and sound, open
    **Actions** and press a ▶. Remove the unpacked copy afterwards so it doesn't clash with the store one.
 
@@ -60,7 +61,7 @@ because the store asks for the privacy policy URL.
 
 ### The item
 
-1. **Items → New item** → upload `dist/bracel-1.0.0.zip`.
+1. **Items → New item** → upload `dist/chrome/bracel-chrome-<version>.zip`.
 2. **Store listing** tab (text from `store/LISTING.md`):
    - Description: the "Description" section. Category: Lifestyle → Just for Fun. Language: English.
    - Store icon: `icons/icon128.png`.
@@ -86,20 +87,62 @@ because the store asks for the privacy policy URL.
 ### After approval
 
 1. Copy the listing URL (`https://chromewebstore.google.com/detail/<name>/<id>`).
-2. Put it in `site/index.html` (the `#store` link, marked `STORE`), open a PR, merge: Cloudflare redeploys.
+2. Put it in `site/index.html` (the `#store` link), open a PR, merge: Cloudflare redeploys. (Done for 1.0.0 on 31 Oct
+   2026.)
 3. Tick the Phase 6 items in `ROADMAP.md`.
 
 ## 4. Microsoft Edge (optional, same zip)
 
-https://partner.microsoft.com/dashboard/microsoftedge → register (free) → **Create new extension** → upload the same
-zip, the same listing, the same privacy URL. Category: Entertainment.
+https://partner.microsoft.com/dashboard/microsoftedge → register (free) → **Create new extension** → upload
+`dist/edge/bracel-edge-<version>.zip` (the same files as Chrome), the same listing, the same privacy URL. Category:
+Entertainment.
 
-## 5. Shipping an update
+## 5. Firefox Add-ons (AMO)
+
+The Firefox package differs from Chrome's only in its manifest (made by `npm run build`): a background script instead
+of a service worker, the add-on id `bracel@saurabhpagrut.in` (never change it: it is how updates find the add-on), and
+the built-in data consent declaring that nothing is collected. It needs Firefox 140 or later.
+
+1. Check it: `npx web-ext lint -s dist/firefox/bracel-firefox-<version>` (0 errors, 0 warnings for 1.0.1), then try it in
+   Firefox: `about:debugging#/runtime/this-firefox` → **Load Temporary Add-on** → its `manifest.json`. Bring Bracel to
+   a tab, switch on "On this site" (Firefox asks for the permission), reload: it comes back by itself.
+2. https://addons.mozilla.org/developers/ → sign in with a Firefox account (free) → **Submit a New Add-on** → **On this
+   site** → upload `dist/firefox/bracel-firefox-<version>.zip`. Platforms: Firefox (desktop) only for now.
+3. Source code: answer **No** (nothing is minified or bundled; the package is the source).
+4. Listing: the same name, summary and description as `store/LISTING.md`. Category: Fun. Support site: the GitHub
+   issues URL. Privacy policy: paste the text of `PRIVACY.md`. Screenshots: the same five.
+5. Review is often automatic within hours; a human review can come later.
+
+## 6. Opera add-ons
+
+https://addons.opera.com/developer/ → sign in → **Upload new extension** → `dist/opera/bracel-opera-<version>.zip` (the
+same files as Chrome), the same listing. Category: Fun. Opera's review can take weeks; meanwhile Opera users can
+install from the Chrome Web Store.
+
+## 7. Safari (later; needs a Mac with Xcode and the Apple Developer Program, US$99 a year)
+
+`npm run build` leaves `dist/safari/bracel-safari-<version>/`. Turn it into a Mac app that carries the extension:
+
+```sh
+xcrun safari-web-extension-converter dist/safari/bracel-safari-<version> --app-name Bracel --bundle-identifier in.saurabhpagrut.bracel
+```
+
+Then in Xcode: set the team, run it to test (Safari → Settings → Advanced → Show features for web developers, then
+Develop → Allow unsigned extensions), archive, and submit through App Store Connect with the same listing.
+
+## Other browsers
+
+Brave, Vivaldi, Arc, Yandex and Naver Whale install extensions from the Chrome Web Store, so the Chrome listing
+already covers them. Firefox for Android and Samsung Internet (Galaxy Store) are possible later, after testing on a
+phone.
+
+## 8. Shipping an update
 
 1. Branch, change, `npm test`.
 2. Bump `version` in `manifest.json` **and** `package.json` (lint checks they match), and add a `CHANGELOG.md` entry.
 3. Visible change? `node scripts/screenshots.mjs` (with `npm run serve` running) and `npm run icons` if the look changed.
 4. PR, merge, then `npm run build`.
-5. Developer dashboard → the item → **Package** → **Upload new package** → the new zip → **Submit for review**.
-   Users get the update automatically after approval.
+5. In each store, upload that browser's zip from `dist/<browser>/`. Chrome: developer dashboard → the item →
+   **Package** → **Upload new package** → **Submit for review**. Edge, Firefox, Opera: the item → **Update** / **Upload
+   new version**. Users get the update automatically after approval.
 6. If `PRIVACY.md` changed, update its date; merging redeploys the website.
