@@ -94,8 +94,10 @@ The new part. It must be cheap, cautious and boring.
 
 ## 8. Cross-browser
 
-- Chrome and Edge first (same package). Firefox next: use `browser.*` through a tiny shim, with `background.scripts` for
-  Firefox's MV3 and a `browser_specific_settings.gecko.id`. Safari later, through Xcode's converter.
+- One source, one package per browser (`npm run build`, `dist/<browser>/`). Chrome, Edge and Opera get the same files.
+  Firefox gets `background.scripts` instead of the service worker, a `browser_specific_settings.gecko.id` and the
+  "no data collected" declaration; `shared.js` points `chrome` at Firefox's and Safari's promise-based `browser`, so the
+  code says `chrome.*` everywhere. Safari: the same package through Xcode's converter.
 - No browser-specific APIs in the engine; only the host layer knows which browser it is in.
 
 ## 9. Store policy and listing

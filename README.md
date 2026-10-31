@@ -33,7 +33,7 @@ The demo pages in `demo/` run the engine without the extension: `npm run serve` 
 npm install          # Playwright, for the tests only
 npm run lint         # syntax and policy checks (no eval, no network, no remote code)
 npm test             # all tests
-npm run build        # dist/bracel-<version>.zip for the stores
+npm run build        # dist/<browser>/ for Chrome, Edge, Opera, Firefox and Safari (dist/README.md says which goes where)
 npm run site         # dist/site/, the website (bracel.saurabhpagrut.in) with the privacy policy
 ```
 

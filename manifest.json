@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Bracel: a cat for every website",
+  "name": "Bracel – Virtual Cat & Screen Pet",
   "short_name": "Bracel",
-  "version": "1.0.0",
-  "description": "A cat that lives on the edges of the websites you visit. It walks, naps and purrs, and never gets in the way.",
+  "version": "1.0.1",
+  "description": "A cute virtual cat and browser pet that walks, naps, and purrs along the edges of any website without getting in your way.",
   "minimum_chrome_version": "116",
   "icons": { "16": "icons/icon16.png", "32": "icons/icon32.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
   "action": {

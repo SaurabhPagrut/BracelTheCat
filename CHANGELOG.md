@@ -1,6 +1,16 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.1 (unreleased)
+
+- Store name and summary say what Bracel is, for people searching the stores: "Bracel – Virtual Cat & Screen Pet",
+  "A cute virtual cat and browser pet…". New description and captioned screenshots (`store/`).
+- Builds for every store: `npm run build` makes `dist/chrome/`, `dist/edge/`, `dist/opera/`, `dist/firefox/` and
+  `dist/safari/`, with `dist/README.md` saying which goes where.
+- Runs in Firefox 140+: a background script there instead of the service worker, and `chrome.*` calls go to Firefox's
+  `browser.*`.
+- Website: search title and description, and the "Add to Chrome" button points at the Chrome Web Store listing.
+
+## 1.0.0 (31 Oct 2026, Chrome Web Store)
 
 First version of Bracel for every website.
 

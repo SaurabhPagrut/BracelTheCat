@@ -18,11 +18,14 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: npm run build
+      - run: npx --yes web-ext@8 lint -s dist/firefox/bracel-firefox-$(node -p "require('./package.json').version")
       - run: npm run site
       - uses: actions/upload-artifact@v4
         with:
           name: bracel-extension
-          path: dist/bracel-*.zip
+          path: |
+            dist/*/bracel-*.zip
+            dist/README.md
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

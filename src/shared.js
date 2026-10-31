@@ -1,5 +1,7 @@
 /* What the content script, the service worker and the popup agree on: the settings and their defaults, how a site is
    named, and the activity and coat lists the popup shows (the engine has its own copy; a test keeps them equal). */
+// Firefox and Safari: their promise-based `browser` is the same API, so the rest of the code can say `chrome` everywhere
+if (globalThis.browser && globalThis.browser.runtime && globalThis.chrome !== globalThis.browser) try { globalThis.chrome = globalThis.browser; } catch (_) {}
 globalThis.BRACEL = globalThis.BRACEL || {
   // chrome.storage.sync: settings that follow the user
   DEF: { coat: "cloud", size: 0.2, sound: true, acts: [] },

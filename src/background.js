@@ -1,7 +1,8 @@
 /* The service worker. Tiny on purpose (guidelines §2): it shows "on" on the toolbar badge for tabs Bracel is on, brings
    Bracel to a tab or sends it away (toolbar popup, shortcut), and keeps one registered content script in step with the
    permissions the user granted: one origin per site switched on, or every site, minus the sites switched off. */
-importScripts("shared.js");
+// a service worker in Chrome and Edge; in Firefox a background script, with shared.js listed before it in the manifest
+if (typeof importScripts === "function") importScripts("shared.js");
 const B = globalThis.BRACEL, ID = "bracel";
 const FILES = B.FILES, AUTO = ["src/auto.js", ...FILES];
 
