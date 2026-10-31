@@ -116,7 +116,7 @@ the built-in data consent declaring that nothing is collected. It needs Firefox 
 ## 6. Opera add-ons
 
 https://addons.opera.com/developer/ → sign in → **Upload new extension** → `dist/opera/bracel-opera-<version>.zip` (the
-same files as Chrome), the same listing, icon `store/icon-64x64.png`, licence MIT. Category: Fun. Opera's review can take weeks; meanwhile Opera users can
+same files as Chrome), the same listing, icon `store/icon-64x64.png`, promo image `store/promo-300x188.png`, licence MIT. Category: Fun. Opera's review can take weeks; meanwhile Opera users can
 install from the Chrome Web Store.
 
 ## 7. Safari (later; needs a Mac with Xcode and the Apple Developer Program, US$99 a year)

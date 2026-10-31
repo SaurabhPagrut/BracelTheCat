@@ -1,5 +1,5 @@
 // Draws Bracel's head (the engine's head, ears and eyes, Cloud coat) into icons/icon{16,32,48,128}.png, the store
-// promo tile, the marquee and Opera's 64 px listing icon (store/icon-64x64.png), with Playwright's Chromium. Run after changing the look: npm run icons
+// promo tile, the marquee and Opera's 64 px icon and 300x188 promo (store/icon-64x64.png, store/promo-300x188.png), with Playwright's Chromium. Run after changing the look: npm run icons
 // The 128 icon keeps the Chrome Web Store's 16 px of transparent padding around 96 px of art; the small ones fill.
 import { chromium } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -36,6 +36,7 @@ const save = (f, d) => writeFileSync(f, Buffer.from(d.split(",")[1], "base64"));
 for (const s of [16, 32, 48, 128]) save(`icons/icon${s}.png`, await p.evaluate(([s, pad]) => window.icon(s, pad), [s, s === 128 ? 16 : 0]));
 save("store/icon-64x64.png", await p.evaluate(() => window.icon(64, 0)));
 save("store/promo-440x280.png", await p.evaluate(() => window.tile(440, 280)));
+save("store/promo-300x188.png", await p.evaluate(() => window.tile(300, 188)));
 save("store/marquee-1400x560.png", await p.evaluate(() => window.tile(1400, 560)));
 await browser.close();
-console.log("icons/icon{16,32,48,128}.png, store/icon-64x64.png, store/promo-440x280.png, store/marquee-1400x560.png");
+console.log("icons/icon{16,32,48,128}.png, store/icon-64x64.png, store/promo-300x188.png, store/promo-440x280.png, store/marquee-1400x560.png");
