@@ -124,6 +124,8 @@ From the owner's SEO guide (kept out of the repo, in `var/`) and a look at which
       or swapped reviews (store policy).
 - [ ] Share it: a short clip of Bracel on a page for Reddit (r/chrome_extensions, r/webdev with how it was made, cat
       subreddits where self-promotion is allowed), short-video sites, and Product Hunt (owner).
+- [x] Intro and demo video for YouTube (`npm run video`, `store/YOUTUBE.md`): 78 s, captions, credit on the cards.
+- [ ] Upload the video to YouTube with a quiet Audio Library track (owner); then add its link to the Chrome listing.
 - [ ] Safari: needs Xcode and the Apple Developer Program (US$99 a year); `dist/safari/` is ready for Apple's converter.
 - [ ] Firefox for Android and Samsung Internet: only after trying Bracel on a phone (touch has no hover or pounce).
 
