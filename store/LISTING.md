@@ -7,6 +7,7 @@ The same text for every store. How to submit: `PUBLISHING.md`. The name and summ
 | --- | --- | --- |
 | Store icon 128×128 (96 px art, 16 px transparent padding) | `icons/icon128.png` | Store listing → Store icon |
 | Screenshots 1280×800, captioned | `store/screenshot-1..5.png` (`node scripts/screenshots.mjs`) | Store listing → Screenshots, in order |
+| Opera icon 64×64 | `store/icon-64x64.png` (`npm run icons`) | Opera add-ons → Icon |
 | Small promo tile 440×280 | `store/promo-440x280.png` (`npm run icons`) | Store listing → Small promo tile |
 | Marquee 1400×560 (optional) | `store/marquee-1400x560.png` (`npm run icons`) | Store listing → Marquee promo tile |
 
