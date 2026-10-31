@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.1 (unreleased)
+## 1.0.1 (submitted to the Chrome Web Store on 31 Oct 2026)
 
 - Store name and summary say what Bracel is, for people searching the stores: "Bracel – Virtual Cat & Screen Pet",
   "A cute virtual cat and browser pet…". New description and captioned screenshots (`store/`).

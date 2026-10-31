@@ -18,7 +18,8 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       (https://chromewebstore.google.com/detail/bracel-a-cat-for-every-we/diiopbiepmlejbbibggfhhdmnaeiehjf).
 - [x] 31 Oct 2026 (1.0.1): store search words (name, summary, description, captioned screenshots), and a build for
       every store (`dist/chrome`, `edge`, `opera`, `firefox`, `safari`). See Phase 7.
-- [ ] **Next:** upload 1.0.1 to Chrome; submit to Edge and Firefox (Phase 7).
+- [x] 31 Oct 2026: 1.0.1 submitted to the Chrome Web Store (new name, summary, description, captioned screenshots).
+- [ ] **Next:** wait for the 1.0.1 review; submit to Edge and Firefox (Phase 7).
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -116,7 +117,7 @@ From the owner's SEO guide (kept out of the repo, in `var/`) and a look at which
 - [x] One build per browser: `npm run build` → `dist/<browser>/` and `dist/README.md`.
 - [x] Firefox package: background script, add-on id `bracel@saurabhpagrut.in`, no data collected declared, Firefox
       140+. `web-ext lint`: 0 errors, 0 warnings.
-- [ ] Upload 1.0.1 to the Chrome Web Store (new name, summary, description and screenshots) (owner).
+- [x] Upload 1.0.1 to the Chrome Web Store (new name, summary, description and screenshots): submitted 31 Oct 2026.
 - [ ] Try the Firefox package in Firefox, then submit it to AMO (owner; free Firefox account). `PUBLISHING.md` §5.
 - [ ] Edge (above) and Opera add-ons (`PUBLISHING.md` §6) (owner).
 - [ ] First honest reviews: share the listing with friends and colleagues; ask for real feedback (owner). No paid
