@@ -1,5 +1,7 @@
 # Bracel for every website
 
+<p align="center"><img src="store/producthunt-icon-240.gif" width="240" height="240" alt="Bracel the cat looks around, grooms, yawns, kneads and purrs"></p>
+
 A browser extension that puts **Bracel**, a small round cat, on the websites you visit. Bracel lives on the edges of
 the page (the tops of boxes and images, under headers, on the bottom of the window), walks, jumps, hangs, grooms, naps
 and purrs, and never gets in the way: it takes no clicks, no focus and no keys.
@@ -30,11 +32,12 @@ The demo pages in `demo/` run the engine without the extension: `npm run serve` 
 | `test/` | Playwright tests (engine, spot finder against saved pages, the extension end to end) |
 
 ```sh
-npm install          # Playwright, for the tests only
+npm install          # Playwright (tests, screenshots, video) and gifenc (the GIFs)
 npm run lint         # syntax and policy checks (no eval, no network, no remote code)
 npm test             # all tests
 npm run build        # dist/<browser>/ for Chrome, Edge, Opera, Firefox and Safari (dist/README.md says which goes where)
 npm run site         # dist/site/, the website (bracel.saurabhpagrut.in) with the privacy policy
+npm run gif          # dist/gif/, the Product Hunt GIFs (needs npm run serve)
 ```
 
 Releasing (website, Chrome Web Store, updates): `PUBLISHING.md`. Privacy policy: `PRIVACY.md`, published at

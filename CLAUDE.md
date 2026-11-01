@@ -26,8 +26,8 @@ This is a **separate project** from Bracely (the JSON tools web app). It starts 
 | `site/` | The website (bracel.saurabhpagrut.in, Cloudflare Pages): landing page with Bracel on it; `npm run site` → `dist/site/` |
 | `demo/` | Demo pages for the owner (`npm run serve`, then http://localhost:8080/demo/) |
 | `test/` | Playwright: engine, spot finder on `test/pages/` (saved pages), the built extension; `live.spec.js` optional |
-| `scripts/` | lint, build, website, icons, store screenshots, the local server |
-| `store/` | Listing text, screenshots, promo tile |
+| `scripts/` | lint, build, website, icons, store screenshots, the YouTube video, the GIFs (`npm run gif`), the local server |
+| `store/` | Listing text, screenshots, promo tile, Product Hunt GIFs (the icon one is also the README's) |
 | `reference/cat.js` | Bracel as it ships in Bracely (merged in Bracely #103, 30 Oct 2026). `src/engine.js` was generated from it |
 | `reference/BRACELY_GLUE.md` | What `cat.js` borrows from Bracely and how the extension replaces it |
 
