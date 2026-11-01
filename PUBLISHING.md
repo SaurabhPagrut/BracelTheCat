@@ -136,6 +136,15 @@ Brave, Vivaldi, Arc, Yandex and Naver Whale install extensions from the Chrome W
 already covers them. Firefox for Android and Samsung Internet (Galaxy Store) are possible later, after testing on a
 phone.
 
+## Product Hunt
+
+- Thumbnail (240×240, animated GIF, under 3 MB): `store/producthunt-icon-240.gif`, only Bracel on white.
+- Gallery: `store/producthunt-gallery-1270x760.gif` first, then the screenshots.
+- The thumbnail is too small for the art credit, so put "Bracel's look is adapted from Bento Cat by mikewirsch
+  (CC BY 4.0)" in the description (guidelines §10). The gallery GIF carries it.
+- To make them again (a new pose, coat or background): `npm run serve`, then `npm run gif`
+  (`--only icon|gallery`, `--bg <colour>`, `--coat <coat>`), and copy `dist/gif/*.gif` over the ones in `store/`.
+
 ## 8. Shipping an update
 
 1. Branch, change, `npm test`.

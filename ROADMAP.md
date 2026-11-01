@@ -19,6 +19,7 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
 - [x] 31 Oct 2026 (1.0.1): store search words (name, summary, description, captioned screenshots), and a build for
       every store (`dist/chrome`, `edge`, `opera`, `firefox`, `safari`). See Phase 7.
 - [x] 31 Oct 2026: 1.0.1 submitted to the Chrome Web Store (new name, summary, description, captioned screenshots).
+- [x] 2 Nov 2026: Product Hunt GIFs (`npm run gif`): a 240×240 icon with only Bracel, and a 1270×760 gallery GIF.
 - [ ] **Next:** wait for the 1.0.1 review; submit to Edge and Firefox (Phase 7).
 
 ## Phase 0: decisions and setup (before any code)

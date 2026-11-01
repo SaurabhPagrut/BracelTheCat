@@ -14,9 +14,11 @@
     "icons": "node scripts/icons.mjs",
     "serve": "node scripts/serve.mjs",
     "site": "node scripts/site.mjs",
-    "video": "node scripts/video.mjs"
+    "video": "node scripts/video.mjs",
+    "gif": "node scripts/gif.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.1"
+    "@playwright/test": "1.64.1",
+    "gifenc": "1.0.3"
   }
 }
