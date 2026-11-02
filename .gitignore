@@ -6,3 +6,4 @@ playwright-report/
 *.tmp.mjs
 var/
 store/*.webm
+graphify-out/
