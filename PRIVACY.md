@@ -62,6 +62,12 @@ browser APIs adheres to the Chrome Web Store User Data Policy, including the Lim
 
 Bracel collects no data from anyone, including children under 13.
 
+## Buy Me a Coffee link
+
+The popup and the website have a "Buy me a coffee" link. It is an ordinary link: Bracel sends nothing when it is shown,
+and it only opens buymeacoffee.com in a new tab if you click it. Anything you do there is covered by Buy Me a Coffee's
+own privacy policy.
+
 ## The website
 
 https://bracel.saurabhpagrut.in is a static website hosted on Cloudflare Pages. It sets no cookies and runs no

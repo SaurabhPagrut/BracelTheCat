@@ -33,6 +33,9 @@ test("the popup opens cleanly: show switch, coats, size, sound, folded actions a
   await expect(p.locator("#acts")).toBeVisible();
   await expect(p.locator("#credit")).toContainText("Bento Cat");
   await expect(p.locator("#credit a")).toHaveCount(2);
+  // the coffee link is a plain link to a new tab, nothing loaded from Buy Me a Coffee
+  await expect(p.locator("#coffee")).toHaveAttribute("href", "https://buymeacoffee.com/saurabhpagrut");
+  await expect(p.locator("#coffee")).toHaveAttribute("target", "_blank");
   expect(errors).toEqual([]);
 });
 

@@ -22,7 +22,8 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
 - [x] 2 Nov 2026: Product Hunt GIFs (`npm run gif`): a 240×240 icon with only Bracel, and a 1270×760 gallery GIF.
 - [x] By 2 Nov 2026: video on YouTube and linked from the Chrome listing; submitted to Firefox (AMO), Edge Add-ons and
       Opera add-ons; the website https://bracel.saurabhpagrut.in and its privacy page are live.
-- [ ] **Next:** wait for the 1.0.1 review and the Firefox, Edge and Opera reviews; the paid tier (Phase 8).
+- [ ] **Next:** wait for the 1.0.1 review and the Firefox, Edge and Opera reviews; 1.0.2 with the Buy Me a Coffee link,
+      then the demo of new coats and actions (Phase 8).
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -134,13 +135,46 @@ From the owner's SEO guide (kept out of the repo, in `var/`) and a look at which
 
 Not separate stores: Brave, Vivaldi, Arc, Yandex and Naver Whale install from the Chrome Web Store.
 
-## Phase 8: the paid tier (planned 2 Nov 2026)
+## Phase 8: support, and more coats and actions (2 Nov 2026)
 
-Everything Bracel does today stays free. The paid tier adds **new** coats and actions, bought once on the website.
-Bracel itself still makes no network requests, so `PRIVACY.md`, the store privacy forms and the Firefox "no data
-collected" declaration do not change.
+Bracel stays **free**. Support comes from a Buy Me a Coffee link, as in PinScout; the paid tier below is on hold.
 
-How it works:
+- [ ] A "Buy me a coffee" button in the website's navbar and a "☕ Buy me a coffee" link at the bottom of the popup
+      (1.0.2). Plain links in Buy Me a Coffee's colours: no widget, no script, nothing loaded from them, so Bracel still
+      makes no network requests. `PRIVACY.md` says so; AMO's listing gets the Contributions URL.
+- [ ] Demo first: a page with the candidate coats and actions below, for the owner to pick (CLAUDE.md "Demo first").
+- [ ] The chosen ones in the engine and the popup, free like the rest.
+
+Candidate coats (each with a dark-page variant, like the five today):
+
+- Ginger tabby: orange with darker stripes on the back, tail and head.
+- Calico: white with orange and black patches.
+- Black cat: near black, with green eyes so the face still reads on dark pages.
+- Siamese: cream body with dark brown ears, face, paws and tail tip.
+- Grey tabby: silver grey with soft stripes.
+- Site colours: a coat picked from the page's own colours (from "Later").
+- Seasonal extras worn over any coat: a Santa hat in December, a small pumpkin at Halloween.
+
+Candidate actions (on top of the 22 today; each must keep to the spots and never get in the way):
+
+- Chase its tail: spins on the spot a few turns, then sits as if nothing happened.
+- Loaf: tucks its paws under and becomes a bread loaf; a long, quiet rest.
+- Box: a small cardboard box appears on a ledge; Bracel hops in and peeks out.
+- Laser dot: a red dot runs along the edge; Bracel stalks it, pounces, loses it.
+- Knock it off: pats a tiny cup at the edge of a ledge until it falls and disappears.
+- Zoomies: a sudden fast run along the ledge and back, then a groom.
+- Bird watching: a bird flies past above; Bracel chatters at it, tail twitching.
+- Roll over: lies on its back, belly up, paws in the air.
+- Follow me: walks along the edges towards the pointer and sits nearby (opt-in; from "Later").
+
+## Paid tier (on hold since 2 Nov 2026)
+
+Planned on 2 Nov 2026, then put on hold: Bracel stays free for now. Kept here for when it comes back to the table.
+The idea was: new coats and actions, bought once on the website, while everything free stays free.
+Bracel itself would still make no network requests, so `PRIVACY.md`, the store privacy forms and the Firefox "no data
+collected" declaration would not change.
+
+How it would work:
 
 - **Buy on the website.** A "Get more coats" button on bracel.saurabhpagrut.in opens a Lemon Squeezy checkout (Lemon
   Squeezy is the merchant of record: it charges the card and handles sales tax and GST worldwide). The Chrome Web Store
@@ -157,10 +191,9 @@ How it works:
 - **Honest limits.** The code is public (MIT), so someone could switch the check off; that is fine for a small fun
   extension. Keys cannot be revoked offline; a refund simply does not get a key back.
 
-Steps:
+Steps, if it goes ahead:
 
-- [ ] Demo first: a page with candidate paid coats and actions, for the owner to pick (CLAUDE.md "Demo first").
-- [ ] Engine: the chosen coats and actions, marked paid in `src/shared.js`; the popup shows them locked until a key.
+- [ ] Engine: the paid coats and actions, marked paid in `src/shared.js`; the popup shows them locked until a key.
 - [ ] Popup: an "Unlock" field for the key, with a link to the website; clear messages for a wrong key.
 - [ ] Key check: Ed25519 verify with Web Crypto in the extension; tests with good, bad and tampered keys.
 - [ ] Website: "Get more coats" section and button, the after-payment key page and "Find my key" (Pages Functions),
@@ -171,8 +204,6 @@ Steps:
 
 ## Later
 
-- [ ] "Follow me": when the pointer moves far away, Bracel travels along edges towards it and sits nearby (opt-in).
-- [ ] More coats; a coat that follows the site's own colours.
 - [ ] Shared engine: if Bracel changes in one place, decide whether Bracely and the extension share `engine.js`
       (copied with a version note, or a small package).
 
@@ -196,11 +227,11 @@ Steps:
   for every website"); the website's headline stays "A cat for every website".
 - 31 Oct 2026: one source tree, one package per browser made by the build; no `browser.*` polyfill library, just one line
   in `shared.js`.
-
-- 2 Nov 2026: a **paid tier**, a one-time purchase of new coats and actions through Lemon Squeezy on the website, unlocked
-  by a signed key checked offline. Everything free today stays free, and Bracel still makes no network requests
-  (Phase 8).
+- 2 Nov 2026: a paid tier was planned (a one-time purchase through Lemon Squeezy, unlocked by a signed key checked
+  offline), then put **on hold** the same day: Bracel stays free, with a Buy Me a Coffee link (Phase 8). The plan is
+  kept under "Paid tier (on hold)".
 
 ## Open questions
 
-- The paid tier's name and price, and which new coats and actions it holds (after the demo).
+- Which of the candidate coats and actions (Phase 8) to build first (after the demo).
+- A paid tier later, or free with Buy Me a Coffee only? On hold; the plan is under "Paid tier (on hold)".
