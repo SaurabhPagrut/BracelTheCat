@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Several Bracels</title>
+<style>
+:root { color-scheme: light dark; --bg: #f8fafc; --panel: #fff; --fg: #0f172a; --muted: #64748b; --line: #e2e8f0; --accent: #2563eb; --ok: #16a34a; --warn: #d97706; --bad: #dc2626; }
+@media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --panel: #0f172a; --fg: #e2e8f0; --muted: #94a3b8; --line: #1e293b; --accent: #60a5fa; --ok: #4ade80; --warn: #fbbf24; --bad: #f87171; } }
+* { box-sizing: border-box; }
+body { margin: 0; font: 13px/1.4 system-ui, sans-serif; background: var(--bg); color: var(--fg); display: grid; grid-template-columns: 300px 1fr; height: 100vh; }
+aside { background: var(--panel); border-right: 1px solid var(--line); padding: 14px; overflow: auto; }
+h1 { font-size: 16px; margin: 0 0 4px; } h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 14px 0 6px; }
+p { margin: 0 0 8px; color: var(--muted); }
+select, button, input { font: inherit; }
+select { width: 100%; padding: 4px; }
+.row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 4px 0; }
+button { border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 6px; padding: 4px 9px; cursor: pointer; }
+button[aria-pressed=true] { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.acts { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.acts button { text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stage { display: flex; justify-content: center; align-items: flex-start; overflow: auto; padding: 12px; }
+iframe { border: 1px solid var(--line); background: #fff; width: 100%; height: calc(100vh - 24px); }
+.meter { font: 12px ui-monospace, monospace; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+.meter b { font-weight: 600; }
+.ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); }
+#states { font: 12px ui-monospace, monospace; color: var(--muted); white-space: pre-line; }
+#log { font: 12px ui-monospace, monospace; width: 100%; border-collapse: collapse; } #log td, #log th { border-bottom: 1px solid var(--line); padding: 2px 4px; text-align: right; } #log th:first-child, #log td:first-child { text-align: left; }
+a { color: var(--accent); }
+@media (max-width: 760px) { body { grid-template-columns: 1fr; grid-template-rows: auto 70vh; height: auto; } aside { border-right: 0; border-bottom: 1px solid var(--line); } iframe { height: 70vh; } }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Several Bracels</h1>
+  <p>A demo for the roadmap: more than one Bracel on a page, sharing one spot finder. The meter times the script work of
+    all the cats in each animation frame, so you can compare 1, 2, 3 and 5. Sound is off so the purrs don't pile up.</p>
+  <h2>Page</h2>
+  <select id="page" aria-label="Page"></select>
+  <div class="row"><button data-w="1280">1280 px</button><button data-w="390">390 px</button><button data-w="">Full</button></div>
+  <h2>How many</h2>
+  <div class="row" id="count"></div>
+  <p>Changing the number reloads the page, so each count is measured from a clean start.</p>
+  <div class="row"><button id="own" aria-pressed="true">One cat per spot</button></div>
+  <p>On: a cat isn't offered a spot another cat stands on (the bottom of the window is shared). Off: they may pile up.</p>
+  <h2>Size</h2>
+  <div class="row"><input id="size" type="range" min="0.14" max="0.45" step="0.01" value="0.2" aria-label="Size"><span id="sizeOut">0.20</span></div>
+  <h2>Cost (last 2 s)</h2>
+  <div class="meter" id="meter"></div>
+  <p style="margin-top:6px">The guideline is under 1 ms of script per frame for Bracel (EXTENSION_GUIDELINES.md §5). Frames where every cat is still cost nothing and aren't counted.</p>
+  <div class="row"><button id="rec">Record this count</button><button id="clear">Clear</button></div>
+  <table id="log"><thead><tr><th>cats</th><th>avg ms</th><th>p95 ms</th><th>max ms</th><th>MB</th></tr></thead><tbody></tbody></table>
+  <h2>The cats</h2>
+  <div id="states">-</div>
+  <h2>All of them, now</h2>
+  <div class="acts" id="acts"></div>
+  <h2>New actions (roadmap)</h2>
+  <div class="acts" id="newActs"></div>
+  <div class="row"><button id="mix" aria-pressed="true">Also pick them on their own</button></div>
+  <h2>More demos</h2>
+  <p><a href="index.html">One Bracel</a> · <a href="popup.html">The toolbar popup</a></p>
+  <p style="margin-top:14px">Bracel's look is adapted from <a href="https://rive.app/marketplace/21131-39716-bento-cat/">Bento Cat</a> by mikewirsch, licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Redrawn and animated in code; walking, hanging, jumping, hiding, spots, behaviour and coats are our own.</p>
+</aside>
+<div class="stage"><iframe id="f" title="Saved page with several Bracels"></iframe></div>
+<script src="../src/shared.js"></script>
+<script src="new-actions.js"></script>
+<script>
+const B = globalThis.BRACEL, $ = id => document.getElementById(id), f = $("f");
+const PAGES = ["news", "docs", "dashboard", "shop", "feed", "bracely", "search", "sticky", "dark", "long", "spa", "dialog"];
+for (const p of PAGES) $("page").append(new Option(p, p));
+let count = 3, own = true;
+const multi = () => f.contentWindow && f.contentWindow.bracelMulti;
+// put the engine into the saved page, the way the extension would, then the multi host with `count` cats
+function inject() {
+  const d = f.contentDocument, files = ["../src/shared.js", "../src/engine.js", "../src/spots.js", "new-actions.js", "multi-host.js"].map(s => new URL(s, location.href).href);
+  (function next(i) { if (i >= files.length) { const m = multi(); m.ownSpots(own); m.mix($("mix").getAttribute("aria-pressed") === "true"); m.size(+$("size").value); m.count(count); return; }
+    const s = d.createElement("script"); s.src = files[i]; s.onload = () => next(i + 1); d.documentElement.append(s); })(0);
+}
+function load() { f.src = "../test/pages/" + $("page").value + ".html"; history.replaceState(null, "", `#${$("page").value}/${count}`); }
+f.addEventListener("load", inject);
+$("page").addEventListener("change", load);
+document.querySelectorAll("[data-w]").forEach(b => b.addEventListener("click", () => { f.style.width = b.dataset.w ? b.dataset.w + "px" : "100%"; f.style.flex = "none"; }));
+for (const n of [1, 2, 3, 4, 5]) { const b = document.createElement("button"); b.textContent = n; b.setAttribute("aria-pressed", n === count); b.onclick = () => { count = n; document.querySelectorAll("#count button").forEach(x => x.setAttribute("aria-pressed", x === b)); load(); }; $("count").append(b); }
+$("own").onclick = e => { own = e.target.getAttribute("aria-pressed") !== "true"; e.target.setAttribute("aria-pressed", own); multi() && multi().ownSpots(own); };
+$("size").oninput = () => { $("sizeOut").textContent = (+$("size").value).toFixed(2); multi() && multi().size(+$("size").value); };
+for (const [k, name] of B.ACTS) { const b = document.createElement("button"); b.textContent = "▶ " + name; b.title = name; b.onclick = () => multi() && multi().act(k); $("acts").append(b); }
+for (const [k, name] of globalThis.BracelNewActions().NEW) { const b = document.createElement("button"); b.textContent = "▶ " + name; b.title = name; b.onclick = () => multi() && multi().act(k); $("newActs").append(b); }
+$("mix").onclick = e => { const v = e.target.getAttribute("aria-pressed") !== "true"; e.target.setAttribute("aria-pressed", v); multi() && multi().mix(v); };
+const cls = ms => ms < 1 ? "ok" : ms < 2 ? "warn" : "bad", fx = n => n.toFixed(2);
+setInterval(() => {
+  const m = multi(); if (!m) return; const s = m.stats();
+  $("meter").innerHTML = `<span>cats</span><b>${s.cats}</b><span>avg / frame</span><b class="${cls(s.avg)}">${fx(s.avg)} ms</b>`
+    + `<span>p95 / frame</span><b class="${cls(s.p95)}">${fx(s.p95)} ms</b><span>worst frame</span><b class="${cls(s.max)}">${fx(s.max)} ms</b>`
+    + `<span>busy frames</span><b>${Math.round(s.perSecond)} / s</b><span>canvases</span><b>${fx(s.canvasMB)} MB</b>`;
+  $("states").textContent = s.states.join("\n") || "-";
+}, 500);
+$("rec").onclick = () => { const m = multi(); if (!m) return; const s = m.stats(5000), tr = document.createElement("tr");
+  tr.innerHTML = `<td>${s.cats} · ${$("page").value} · ${f.clientWidth}px</td><td>${fx(s.avg)}</td><td>${fx(s.p95)}</td><td>${fx(s.max)}</td><td>${fx(s.canvasMB)}</td>`; document.querySelector("#log tbody").append(tr); };
+$("clear").onclick = () => document.querySelector("#log tbody").replaceChildren();
+const [hp, hn] = location.hash.slice(1).split("/"); if (PAGES.includes(hp)) $("page").value = hp; if (+hn >= 1 && +hn <= 5) { count = +hn; document.querySelectorAll("#count button").forEach(x => x.setAttribute("aria-pressed", +x.textContent === count)); }
+load();
+</script>
+</body>
+</html>

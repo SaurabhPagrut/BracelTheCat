@@ -12,12 +12,16 @@
   const put = () => { if (!hostEl.isConnected) document.documentElement.append(hostEl); }; put();
   new MutationObserver(put).observe(document.documentElement, { childList: true });
   const spots = globalThis.BracelSpots({ own: el => el === hostEl });
+  // the candidate actions from the roadmap (demo/new-actions.js), when that file is loaded too
+  const extra = globalThis.BracelNewActions ? globalThis.BracelNewActions() : null;
   const engine = globalThis.BracelEngine({
     store: { get: (k, d) => (k in S ? S[k] : d), set: (k, v) => { S[k] = v; } }, test: true,
+    pose: extra && extra.pose, paint: extra && extra.paint,
     surfaces: m => spots.surfaces(m), overlay: () => spots.overlay(), theme: () => spots.theme(),
     mount: cv => root.append(cv), onPageChange: f => spots.onChange(f), onThemeChange: f => spots.onTheme(f),
     onShown: s => { hostEl.dataset.shown = s ? "1" : ""; }
   });
+  if (extra) extra.install(engine);
   // outlines of the spots: ledge green, floor blue, bar orange (where its line is, and the run it may use)
   const layer = document.createElement("div"); layer.className = "spots"; root.append(layer); let outl = 0;
   const COL = { ledge: "#16a34a", floor: "#2563eb", shelf: "#2563eb", bar: "#ea580c" };
@@ -32,5 +36,5 @@
   }
   spots.onChange(paint); addEventListener("scroll", () => outl && requestAnimationFrame(paint), { passive: true });
   function show() { spots.start(); engine.set(true); }
-  window.bracelDemo = { engine, spots, S, show, hide: () => { engine.set(false); spots.stop(); }, showSpots: v => { outl = v ? 1 : 0; clearInterval(window.__bp); if (v) window.__bp = setInterval(paint, 500); paint(); } };
+  window.bracelDemo = { engine, spots, S, show, extra, hide: () => { engine.set(false); spots.stop(); }, showSpots: v => { outl = v ? 1 : 0; clearInterval(window.__bp); if (v) window.__bp = setInterval(paint, 500); paint(); } };
 })();

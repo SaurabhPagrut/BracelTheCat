@@ -143,6 +143,10 @@ Bracel stays **free**. Support comes from a Buy Me a Coffee link, as in PinScout
       (1.0.2). Plain links in Buy Me a Coffee's colours: no widget, no script, nothing loaded from them, so Bracel still
       makes no network requests. `PRIVACY.md` says so; AMO's listing gets the Contributions URL.
 - [ ] Demo first: a page with the candidate coats and actions below, for the owner to pick (CLAUDE.md "Demo first").
+      2 Nov 2026: the nine actions are in the demos (`demo/new-actions.js`: ▶ buttons on `demo/index.html` and
+      `demo/multi.html`, and a switch to let Bracel pick them on its own). They plug into the engine through two hooks a
+      demo host can pass (`host.pose`, `host.paint`) and the test internals (`engine._t`); the extension passes neither.
+      The coats are still to do.
 - [ ] The chosen ones in the engine and the popup, free like the rest.
 
 Candidate coats (each with a dark-page variant, like the five today):
@@ -171,6 +175,18 @@ Candidate actions (on top of the 22 today; each must keep to the spots and never
 
 Planned on 2 Nov 2026, then put on hold: Bracel stays free for now. Kept here for when it comes back to the table.
 The idea was: new coats and actions, bought once on the website, while everything free stays free.
+
+What the paid tier could hold:
+
+- New coats and actions (or some of the Phase 8 ones, if not all of them go free).
+- **More than one Bracel on a page** (2 Nov 2026): up to three cats, each in its own coat, sharing one spot finder.
+  Demo: `demo/multi.html` (`demo/multi-host.js`), which times all the cats' script work per frame. Measured in headless
+  Chromium on the news page at 1280 px: 1 cat 0.31 ms average per busy frame (p95 0.5 ms), 2 cats 0.36 (0.7),
+  3 cats 0.33 (0.6), 5 cats 0.38 (0.7, worst frame 2 ms); 3 cats at 390 px 0.66 (1.0). Canvases: about 0.28 MB a cat
+  at size 0.20. To ship it: one set of page listeners, one timer and one audio context shared by all the cats instead of
+  one each; a cat is never offered a spot another stands on (the demo does this, except the bottom of the window);
+  clicks and stroking go to the cat under the pointer; maybe they notice each other (play, groom, chase). A popup
+  setting "Cats: 1–3"; more than that crowds the page and gets in the way.
 Bracel itself would still make no network requests, so `PRIVACY.md`, the store privacy forms and the Firefox "no data
 collected" declaration would not change.
 
