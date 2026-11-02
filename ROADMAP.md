@@ -20,7 +20,9 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       every store (`dist/chrome`, `edge`, `opera`, `firefox`, `safari`). See Phase 7.
 - [x] 31 Oct 2026: 1.0.1 submitted to the Chrome Web Store (new name, summary, description, captioned screenshots).
 - [x] 2 Nov 2026: Product Hunt GIFs (`npm run gif`): a 240×240 icon with only Bracel, and a 1270×760 gallery GIF.
-- [ ] **Next:** wait for the 1.0.1 review; submit to Edge and Firefox (Phase 7).
+- [x] By 2 Nov 2026: video on YouTube and linked from the Chrome listing; submitted to Firefox (AMO), Edge Add-ons and
+      Opera add-ons; the website https://bracel.saurabhpagrut.in and its privacy page are live.
+- [ ] **Next:** wait for the 1.0.1 review and the Firefox, Edge and Opera reviews; the paid tier (Phase 8).
 
 ## Phase 0: decisions and setup (before any code)
 
@@ -34,8 +36,8 @@ and merge. Rules and limits are in `EXTENSION_GUIDELINES.md`; how to work is in 
       site" (`<all_urls>` at runtime). Recorded in the guidelines §2.
 - [x] **Repo:** github.com/SaurabhPagrut/BracelTheCat (renamed from `bracel` on 30 Oct 2026; private for now; public before the store submission so the source is
       readable), MIT licence, README, `CREDITS.md`, this folder's documents, CI with lint + tests.
-- [ ] **Store accounts (owner):** Chrome Web Store developer account (one-time fee) done; Microsoft Partner Center,
-      Firefox AMO still to do. The Chrome account is new, so it holds only 2 items for now: Bracel and PinScout
+- [x] **Store accounts (owner):** Chrome Web Store developer account (one-time fee), Microsoft Partner Center,
+      Firefox AMO and Opera, all set up by 2 Nov 2026. The Chrome account is new, so it holds only 2 items for now: Bracel and PinScout
       (Bracely's listing was unpublished on 30 Oct 2026 to make room).
 
 ## Phase 1: split the engine from the host
@@ -97,13 +99,13 @@ Goal: Bracel finds good, safe places to be on real pages.
 
 - [x] Store listing: description (with the Bento Cat credit, guidelines §10), screenshots (1280×800) on saved pages, promo
       tile, icons 16/32/48/128. (`store/LISTING.md`, `store/*.png`, `icons/`.)
-- [ ] Privacy policy page (nothing collected; permissions explained). Written (`PRIVACY.md`), built into
-      https://bracel.saurabhpagrut.in/privacy by `npm run site`; live once Cloudflare Pages is set up (`PUBLISHING.md`).
-- [ ] Website https://bracel.saurabhpagrut.in (Cloudflare Pages project `bracel`, bracel.pages.dev): landing page with
+- [x] Privacy policy page (nothing collected; permissions explained). Written (`PRIVACY.md`), built into
+      https://bracel.saurabhpagrut.in/privacy by `npm run site`; live by 2 Nov 2026.
+- [x] Website https://bracel.saurabhpagrut.in (Cloudflare Pages project `bracel`, bracel.pages.dev): landing page with
       Bracel on it, privacy page. After approval, point its "Add to Chrome" button at the listing.
 - [x] Chrome Web Store submission: 1.0.0 (`dist/bracel-1.0.0.zip`) submitted for review on 30 Oct 2026.
 - [x] Chrome Web Store approval (31 Oct 2026); the listing URL is on the website's "Add to Chrome" button (1.0.1).
-- [ ] Edge Add-ons submission (`dist/edge/`). Needs a Microsoft Partner Center account (owner).
+- [x] Edge Add-ons submission (`dist/edge/`), by 2 Nov 2026; waiting for review.
 - [ ] Link from Bracely's About page once it is live (a small Bracely PR, only after the extension is approved).
 
 ## Phase 7: more stores, and being found (31 Oct 2026)
@@ -119,18 +121,53 @@ From the owner's SEO guide (kept out of the repo, in `var/`) and a look at which
 - [x] Firefox package: background script, add-on id `bracel@saurabhpagrut.in`, no data collected declared, Firefox
       140+. `web-ext lint`: 0 errors, 0 warnings.
 - [x] Upload 1.0.1 to the Chrome Web Store (new name, summary, description and screenshots): submitted 31 Oct 2026.
-- [ ] Try the Firefox package in Firefox, then submit it to AMO (owner; free Firefox account). `PUBLISHING.md` §5.
-- [ ] Edge (above) and Opera add-ons (`PUBLISHING.md` §6) (owner).
+- [x] Firefox package submitted to AMO, by 2 Nov 2026; waiting for review. `PUBLISHING.md` §5.
+- [x] Edge (above) and Opera add-ons (`PUBLISHING.md` §6), submitted by 2 Nov 2026; waiting for review.
 - [ ] First honest reviews: share the listing with friends and colleagues; ask for real feedback (owner). No paid
       or swapped reviews (store policy).
 - [ ] Share it: a short clip of Bracel on a page for Reddit (r/chrome_extensions, r/webdev with how it was made, cat
       subreddits where self-promotion is allowed), short-video sites, and Product Hunt (owner).
 - [x] Intro and demo video for YouTube (`npm run video`, `store/YOUTUBE.md`): 78 s, captions, credit on the cards.
-- [ ] Upload the video to YouTube with a quiet Audio Library track (owner); then add its link to the Chrome listing.
+- [x] Upload the video to YouTube and add its link to the Chrome listing, by 2 Nov 2026.
 - [ ] Safari: needs Xcode and the Apple Developer Program (US$99 a year); `dist/safari/` is ready for Apple's converter.
 - [ ] Firefox for Android and Samsung Internet: only after trying Bracel on a phone (touch has no hover or pounce).
 
 Not separate stores: Brave, Vivaldi, Arc, Yandex and Naver Whale install from the Chrome Web Store.
+
+## Phase 8: the paid tier (planned 2 Nov 2026)
+
+Everything Bracel does today stays free. The paid tier adds **new** coats and actions, bought once on the website.
+Bracel itself still makes no network requests, so `PRIVACY.md`, the store privacy forms and the Firefox "no data
+collected" declaration do not change.
+
+How it works:
+
+- **Buy on the website.** A "Get more coats" button on bracel.saurabhpagrut.in opens a Lemon Squeezy checkout (Lemon
+  Squeezy is the merchant of record: it charges the card and handles sales tax and GST worldwide). The Chrome Web Store
+  takes no payments since 2020, so the stores are not involved.
+- **The key.** After paying, Lemon Squeezy sends the buyer back to a page on the website (a Cloudflare Pages Function).
+  It checks the order with the Lemon Squeezy API and shows a key: the order number signed with our private key
+  (Ed25519). The private key lives only in Cloudflare's secrets, never in the repo.
+- **Unlock.** The buyer pastes the key into the popup. The extension checks the signature with the public key built
+  into it (Web Crypto), offline. A good key unlocks the paid coats and actions; it is kept in `chrome.storage.sync`,
+  so it follows the buyer's browser profile to their other computers.
+- **Removed the extension, or a new computer?** Buyers never pay twice. The key is the same every time for the same
+  order, so it can always be fetched again: it is in the receipt email, and a "Find my key" page on the website shows
+  it again from the order number (or from Lemon Squeezy's "My orders" page, which signs in by email).
+- **Honest limits.** The code is public (MIT), so someone could switch the check off; that is fine for a small fun
+  extension. Keys cannot be revoked offline; a refund simply does not get a key back.
+
+Steps:
+
+- [ ] Demo first: a page with candidate paid coats and actions, for the owner to pick (CLAUDE.md "Demo first").
+- [ ] Engine: the chosen coats and actions, marked paid in `src/shared.js`; the popup shows them locked until a key.
+- [ ] Popup: an "Unlock" field for the key, with a link to the website; clear messages for a wrong key.
+- [ ] Key check: Ed25519 verify with Web Crypto in the extension; tests with good, bad and tampered keys.
+- [ ] Website: "Get more coats" section and button, the after-payment key page and "Find my key" (Pages Functions),
+      the signing key in Cloudflare secrets. Lemon Squeezy store and product set up (owner).
+- [ ] Words: store listings and the website say what is free and what is paid; the stores allow paid features
+      unlocked outside the store when the listing says so.
+- [ ] Check the Lemon Squeezy fees and payouts for a seller in India (owner) before setting the price.
 
 ## Later
 
@@ -160,6 +197,10 @@ Not separate stores: Brave, Vivaldi, Arc, Yandex and Naver Whale install from th
 - 31 Oct 2026: one source tree, one package per browser made by the build; no `browser.*` polyfill library, just one line
   in `shared.js`.
 
+- 2 Nov 2026: a **paid tier**, a one-time purchase of new coats and actions through Lemon Squeezy on the website, unlocked
+  by a signed key checked offline. Everything free today stays free, and Bracel still makes no network requests
+  (Phase 8).
+
 ## Open questions
 
-- Free only, or a paid tier later (more coats)? Affects store setup.
+- The paid tier's name and price, and which new coats and actions it holds (after the demo).
