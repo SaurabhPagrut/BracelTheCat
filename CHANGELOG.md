@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2 (not yet uploaded)
+
+- A small "bracel.saurabhpagrut.in · ☕ Buy me a coffee" line at the bottom of the popup. Both are plain links that open
+  in a new tab; Bracel sends nothing when they're shown.
+- Website: a "Buy me a coffee" button in the navbar, in Buy Me a Coffee's colours (plain CSS, not their widget).
+- The privacy policy has a paragraph on the coffee link.
+
 ## 1.0.1 (submitted to the Chrome Web Store on 31 Oct 2026)
 
 - Store name and summary say what Bracel is, for people searching the stores: "Bracel – Virtual Cat & Screen Pet",

@@ -110,7 +110,8 @@ the built-in data consent declaring that nothing is collected. It needs Firefox 
    site** → upload `dist/firefox/bracel-firefox-<version>.zip`. Platforms: Firefox (desktop) only for now.
 3. Source code: answer **No** (nothing is minified or bundled; the package is the source).
 4. Listing: the same name, summary and description as `store/LISTING.md`. Category: Fun. Support site: the GitHub
-   issues URL. Privacy policy: paste the text of `PRIVACY.md`. Screenshots: the same five.
+   issues URL. Privacy policy: paste the text of `PRIVACY.md`. Screenshots: the same five. Contributions URL (on the
+   listing's details page): https://buymeacoffee.com/saurabhpagrut
 5. Review is often automatic within hours; a human review can come later.
 
 ## 6. Opera add-ons
