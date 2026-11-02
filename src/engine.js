@@ -548,6 +548,7 @@ globalThis.BracelEngine = globalThis.BracelEngine || function createBracel(host)
 
     // Hover Petting Detection (Purrs & squints happily when user pets head/back!)
     newStates(target, t, dt);
+    if (host.pose) host.pose(target, t, dt);   // a demo host may pose states of its own (demo/new-actions.js)
     gait(target);
     if (sim.petting && sim.state !== 'nap') {
       {
@@ -1261,6 +1262,7 @@ globalThis.BracelEngine = globalThis.BracelEngine || function createBracel(host)
     // hiding behind an edge: nothing is drawn left of it
     ctx.save(); if (sim.clipL > -1e8) { ctx.beginPath(); ctx.rect(sim.clipL, -1e4, 2e4, 2e4); ctx.clip(); }
     renderCat(); ctx.restore(); renderPropsAndParticles(dt);
+    if (host.paint) host.paint(ctx, dt);   // and draw props for them
   }
   function need() { if (!raf) raf = requestAnimationFrame(frame); }
   function stillFrame() { last = 0; sim.particles.length = 0; if (cv) draw(1); }  // a long step lands the pose at once
@@ -1509,7 +1511,8 @@ globalThis.BracelEngine = globalThis.BracelEngine || function createBracel(host)
   return {
     start, set, act, setAct, coat, size, sound, apply, debugPlace, refreshTheme: () => { readTheme(); if (RM()) stillFrame(); }, on: () => on, shown: () => st.shown, state: () => sim.state, el: () => cv, spot: () => st.spot && st.spot.kind,
     acts: () => ACTS, enabled: k => allowed(k), coats: () => Object.entries(COATS).map(([k, c]) => [k, c.name]), surfaces, scan, pickSpot,
-    _t: host.test ? { sim, st, POSE0, gait, stepToward, computeTargetPose, pick, setState, interrupt, A, W8, RM, gen: () => gen, bounds, HALF, H } : undefined
+    _t: host.test ? { sim, st, POSE0, gait, stepToward, computeTargetPose, pick, setState, interrupt, A, W8, RM, gen: () => gen, bounds, HALF, H,
+      wait, until, sit, fly, standOn, lineOf, hanging, sitLegs, addParticle, THEME } : undefined
   };
 
 };
